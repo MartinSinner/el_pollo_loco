@@ -16,11 +16,18 @@ class World {
     ]
     canvas;
     ctx;
+    keyboard;
 
-    constructor(canvas) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
+        this.keyboard = keyboard;
         this.draw();
+        this.setWorld();
+    }
+
+    setWorld(){
+        this.character.world = this;            //blick ich 0 
     }
 
     draw() {
@@ -31,7 +38,7 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);
         this.addObjectsToMap(this.clouds);
-        
+
 
 
         let self = this;
@@ -40,7 +47,7 @@ class World {
         })
     }
 
-    addObjectsToMap(objects){
+    addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         })
