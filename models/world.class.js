@@ -1,12 +1,8 @@
 class World {
     character = new Character();
-    enemies = [
-        new Chicken(),
-        new Chicken(),
-        new Chicken()
-    ];
+    enemies = level1.enemies;
     clouds = [];
-    backgroundObject = [];
+    backgroundObjects = [];
     canvas;
     ctx;
     keyboard;
@@ -26,7 +22,7 @@ class World {
         let x = -500; 
     
         for (let i = 0; i < 1000; i++) {
-            let randomDistance = 400 + Math.random() * 300; // random gap 
+            let randomDistance = 400 + Math.random() * 300; 
             let imageNumber = (i % 2 === 0) ? 1 : 2;
     
             x += randomDistance; 
@@ -43,13 +39,12 @@ class World {
             let offset = i * 719;
             let imageNumber = (i % 2 === 0) ? 1 : 2;
 
-            this.backgroundObject.push(
+            this.backgroundObjects.push(
                 new BackgroundObject('img/5_background/layers/air.png', offset),
                 new BackgroundObject(`img/5_background/layers/3_third_layer/${imageNumber}.png`, offset),
                 new BackgroundObject(`img/5_background/layers/2_second_layer/${imageNumber}.png`, offset),
                 new BackgroundObject(`img/5_background/layers/1_first_layer/${imageNumber}.png`, offset),
             )
-
         }
     }
 
@@ -63,7 +58,7 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
 
-        this.addObjectsToMap(this.backgroundObject);
+        this.addObjectsToMap(this.backgroundObjects);
         this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);
         this.addObjectsToMap(this.clouds);
