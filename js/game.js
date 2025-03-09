@@ -1,16 +1,10 @@
 let canvas;
-let world; 
 let keyboard = new Keyboard();
 
 
 function init(){
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
-
-
-    console.log('my character is', world.character); 
-    console.log('my enemy is' , world.enemies);
-     
+    world = new World(canvas, keyboard);    
 }
 
 document.addEventListener('keydown', (event) => {

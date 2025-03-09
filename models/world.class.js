@@ -1,6 +1,6 @@
 class World {
     character = new Character();
-    enemies = level1.enemies;
+    level = level1;
     clouds = [];
     backgroundObjects = [];
     canvas;
@@ -19,10 +19,9 @@ class World {
     }
 
     generateClouds(){
-        let x = -400; 
-    
+        let x = -500; 
         for (let i = 0; i < 1000; i++) {
-            let randomDistance = 200 + Math.random() * 300; 
+            let randomDistance = 400 + Math.random() * 300; 
             let imageNumber = (i % 2 === 0) ? 1 : 2;
     
             x += randomDistance; 
@@ -33,7 +32,6 @@ class World {
         }
     }
     
-
     generateBackground() {
         for (let i = 0; i < 1000; i++) {
             let offset = i * 719;
@@ -49,7 +47,7 @@ class World {
     }
 
     setWorld() {
-        this.character.world = this;            //blick ich 0 
+        this.character.gameWorld = this;            // = this -> ganze World Instanz, World wird in character gespeichert (in character.js this.world ausreichend)
     }
 
     draw() {
@@ -60,7 +58,7 @@ class World {
 
         this.addObjectsToMap(this.backgroundObjects);
         this.addToMap(this.character);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.clouds);
 
         this.ctx.translate(-this.camera_x, 0);
