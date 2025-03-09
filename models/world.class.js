@@ -19,10 +19,10 @@ class World {
     }
 
     generateClouds(){
-        let x = -500; 
+        let x = -400; 
     
         for (let i = 0; i < 1000; i++) {
-            let randomDistance = 400 + Math.random() * 300; 
+            let randomDistance = 200 + Math.random() * 300; 
             let imageNumber = (i % 2 === 0) ? 1 : 2;
     
             x += randomDistance; 
