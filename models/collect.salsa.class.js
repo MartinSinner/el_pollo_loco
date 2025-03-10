@@ -1,0 +1,3 @@
+class Salsa extends MovableObject {
+    
+}

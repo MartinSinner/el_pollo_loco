@@ -5,6 +5,7 @@ class MovableObject {
     height = 150;
     width = 100;
     imageCache = [];
+    currentImage = 0;
     speed = 0.15;
     otherDirection = false;
 
@@ -23,9 +24,19 @@ class MovableObject {
         });
     }
 
-    moveLeft(){
+    playAnimation(images) {
+        let i = this.currentImage % this.IMAGES_WALKING.length;
+        let path = images[i];
+        this.img = this.imageCache[path];       //picks img from cache
+        this.currentImage++;
+    }
+
+    moveLeft() {
         setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60)
     }
+
+   
+
 }

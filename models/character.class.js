@@ -9,7 +9,6 @@ class Character extends MovableObject {
         'img/2_character_pepe/2_walk/W-25.png',
         'img/2_character_pepe/2_walk/W-26.png'
     ];
-    currentImage = 0;
     speed = 6;
 
 
@@ -39,10 +38,7 @@ class Character extends MovableObject {
 
             if (this.gameWorld.keyboard.RIGHT ||this.gameWorld.keyboard.LEFT ) {
                 //walk animation
-                let i = this.currentImage % this.IMAGES_WALKING.length;
-                let path = this.IMAGES_WALKING[i];
-                this.img = this.imageCache[path];       //picks img from cache
-                this.currentImage++;
+                this.playAnimation(this.IMAGES_WALKING)
             }
         }, 150);
     }

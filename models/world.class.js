@@ -77,7 +77,7 @@ class World {
         })
     }
 
-    addToMap(mo) {
+    addToMap(mo) {                                      //mo = MovableObject
         if (mo.otherDirection) {
             this.ctx.save();
             this.ctx.translate(mo.width, 0);        //causes displacement
