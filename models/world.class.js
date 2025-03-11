@@ -7,7 +7,11 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
-    
+    coinbar = new Coinbar();
+    salsabar = new Salsabar();
+    healthbar = new Healthbar();
+    bossbar = new Bossbar();
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -19,20 +23,20 @@ class World {
         this.setWorld();
     }
 
-    generateClouds(){
-        let x = -500; 
+    generateClouds() {
+        let x = -500;
         for (let i = 0; i < 1000; i++) {
-            let randomDistance = 400 + Math.random() * 300; 
+            let randomDistance = 400 + Math.random() * 300;
             let imageNumber = (i % 2 === 0) ? 1 : 2;
-    
-            x += randomDistance; 
-    
+
+            x += randomDistance;
+
             this.clouds.push(
                 new Cloud(`img/5_background/layers/4_clouds/${imageNumber}.png`, x)
             );
         }
     }
-    
+
     generateBackground() {
         for (let i = 0; i < 1000; i++) {
             let offset = i * 719;
@@ -58,11 +62,21 @@ class World {
 
 
         this.addObjectsToMap(this.backgroundObjects);
+        
+
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.level.salsa);
         this.addObjectsToMap(this.level.coin);
+
+        this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.healthbar);
+        this.addToMap(this.coinbar);
+        this.addToMap(this.salsabar);
+        this.addToMap(this.bossbar);
+        this.ctx.translate(this.camera_x, 0);
 
         this.ctx.translate(-this.camera_x, 0);
 
