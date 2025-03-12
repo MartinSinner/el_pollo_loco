@@ -63,9 +63,7 @@ class World {
 
         this.addObjectsToMap(this.backgroundObjects);
         
-
-
-        this.addToMap(this.character);
+        
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.level.salsa);
@@ -77,6 +75,7 @@ class World {
         this.addToMap(this.salsabar);
         this.addToMap(this.bossbar);
         this.ctx.translate(this.camera_x, 0);
+        this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
 
