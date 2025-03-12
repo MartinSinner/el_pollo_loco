@@ -65,6 +65,7 @@ class World {
         
         
         this.addObjectsToMap(this.level.enemies);
+        this.clouds.forEach(cloud => cloud.moveLeft());
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.level.salsa);
         this.addObjectsToMap(this.level.coin);
@@ -82,7 +83,7 @@ class World {
 
 
         let self = this;
-        requestAnimationFrame(function () {
+        requestAnimationFrame(function () {         //sets framerate 
             self.draw();
         })
     }
@@ -95,16 +96,27 @@ class World {
 
     addToMap(mo) {                                      //mo = MovableObject
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.width, 0);        //causes displacement
-            this.ctx.scale(-1, 1);                  // causes reflection of the image
-            mo.x = mo.x * -1;
+            this.flipImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        
+        mo.draw(this.ctx);
+        mo.drawBorder(this.ctx);
+        
         if (mo.otherDirection) {
-            this.ctx.restore();
-            mo.x = mo.x * -1;
+           this.flipImageBack(mo);
         }
+    }
+
+    flipImage(mo){
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);        //causes displacement
+        this.ctx.scale(-1, 1);                  // causes reflection of the image
+        mo.x = mo.x * -1;
+    }
+
+    flipImageBack(mo){
+        this.ctx.restore();
+        mo.x = mo.x * -1;
     }
 
 }
