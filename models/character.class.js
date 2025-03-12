@@ -37,16 +37,15 @@ class Character extends MovableObject {
 
         setInterval(() => {
             if (this.gameWorld.keyboard.RIGHT && this.x < this.gameWorld.level.level_end_x) {           //this.gameWorld ist world instanz -> world.class.js
-                this.x += this.speed;
-                this.otherDirection = false;
+                this.moveRight();
             }
             if (this.gameWorld.keyboard.LEFT && this.x > 0) {
-                this.x -= this.speed;
+                this.moveLeft();
                 this.otherDirection = true;
             }
 
-            if (this.gameWorld.keyboard.UP) {
-                this.speedY = 20;
+            if (this.gameWorld.keyboard.SPACE && !this.isAboveGround()) {
+                this.jump();
             }
 
             this.gameWorld.camera_x = -this.x + 100;
