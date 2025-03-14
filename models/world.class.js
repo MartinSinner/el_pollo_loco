@@ -21,6 +21,7 @@ class World {
         this.generateClouds();
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
     generateClouds() {
@@ -51,6 +52,16 @@ class World {
         }
     }
 
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                }
+            });
+        }, 200);
+    }
+
     setWorld() {
         this.character.gameWorld = this;            // = this -> ganze World Instanz, World wird in character gespeichert (in character.js this.world ausreichend)
     }
@@ -62,8 +73,8 @@ class World {
 
 
         this.addObjectsToMap(this.backgroundObjects);
-        
-        
+
+
         this.addObjectsToMap(this.level.enemies);
         this.clouds.forEach(cloud => cloud.moveLeft());
         this.addObjectsToMap(this.clouds);
@@ -98,23 +109,23 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-        
+
         mo.draw(this.ctx);
         mo.drawBorder(this.ctx);
-        
+
         if (mo.otherDirection) {
-           this.flipImageBack(mo);
+            this.flipImageBack(mo);
         }
     }
 
-    flipImage(mo){
+    flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);        //causes displacement
         this.ctx.scale(-1, 1);                  // causes reflection of the image
         mo.x = mo.x * -1;
     }
 
-    flipImageBack(mo){
+    flipImageBack(mo) {
         this.ctx.restore();
         mo.x = mo.x * -1;
     }

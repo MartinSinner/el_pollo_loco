@@ -10,6 +10,8 @@ class MovableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
+    energy = 100;
+    lastHit = 0;
 
 
     applyGravity() {
@@ -57,7 +59,7 @@ class MovableObject {
     }
 
     playAnimation(images) {
-        let i = this.currentImage % this.IMAGES_WALKING.length;
+        let i = this.currentImage % images.length;
         let path = images[i];
         this.img = this.imageCache[path];       //picks img from cache
         this.currentImage++;
@@ -76,11 +78,31 @@ class MovableObject {
         this.speedY = 30;
     }
 
-
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+        return this.x + this.width > mo.x &&        // R -> L = Rechte Kante von Pepe berührt linke Kante der Flasche
+            this.y + this.height > mo.y &&         // T -> B = Obere Kante von Pepe berührt untere Kante der Flasche
+            this.x < mo.x + mo.width &&            // L -> R = Linke Kante von Pepe berührt rechte Kante der Flasche
+            this.y < mo.y + mo.height               // B -> T = Untere Kante von Pepe berührt obere Kante der Flasche
+    }
+
+    hit() {
+        this.energy -= 10;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;     //differenz in milisek
+        timepassed = timepassed / 1000;                         //differenz in sek
+        console.log(timepassed);
+        
+        return timepassed < 1;
+    }
+
+    isDead() {
+        return this.energy == 0;
     }
 }
