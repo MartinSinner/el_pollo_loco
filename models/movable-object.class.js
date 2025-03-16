@@ -1,11 +1,4 @@
-class MovableObject {
-    x = 120;
-    y = 280;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = [];
-    currentImage = 0;
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
@@ -22,40 +15,10 @@ class MovableObject {
                 this.speedY -= this.acceleration;
             }
         }, 1000 / 25);
-
     }
 
     isAboveGround() {
         return this.y < 150
-    }
-
-
-    loadImage(path) {
-        this.img = new Image();   //this.img = document.getElementById('image')<img id="image" src="">
-        this.img.src = path;
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    drawBorder(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
-
-    loadImages(array) {
-        array.forEach((path) => {
-
-            let img = new Image();
-            img.src = path;     //loading procces browser
-            this.imageCache[path] = img;        //saves all img 
-        });
     }
 
     playAnimation(images) {
@@ -86,7 +49,7 @@ class MovableObject {
     }
 
     hit() {
-        this.energy -= 10;
+        this.energy -= 5;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
