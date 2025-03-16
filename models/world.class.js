@@ -11,6 +11,7 @@ class World {
     salsabar = new Salsabar();
     healthbar = new Healthbar();
     bossbar = new Bossbar();
+    throwableObjects = [];
 
 
     constructor(canvas, keyboard) {
@@ -21,7 +22,7 @@ class World {
         this.generateClouds();
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
 
     generateClouds() {
@@ -52,19 +53,34 @@ class World {
         }
     }
 
-    checkCollisions() {
+    run() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.healthbar.setPercentage(this.character.energy);
-                }
-            });
+           this.checkCollisions();
+           this.checkThrowObjects();
         }, 200);
+    }
+
+    checkThrowObjects(){
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y);
+            this.throwableObjects.push(bottle);
+            
+        }
+    }
+
+
+    checkCollisions(){
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.healthbar.setPercentage(this.character.energy);
+            }
+        });
     }
 
     setWorld() {
         this.character.gameWorld = this;            // = this -> ganze World Instanz, World wird in character gespeichert (in character.js this.world ausreichend)
+        
     }
 
     draw() {
@@ -81,6 +97,7 @@ class World {
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.level.salsa);
         this.addObjectsToMap(this.level.coin);
+        this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.healthbar);
