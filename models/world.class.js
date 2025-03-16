@@ -56,6 +56,8 @@ class World {
     run() {
         setInterval(() => {
            this.checkCollisions();
+           this.checkCoinCollisions();
+           this.checkSalsaCollisions();
            this.checkThrowObjects();
         }, 200);
     }
@@ -77,6 +79,20 @@ class World {
             }
         });
     }
+
+    checkCoinCollisions(){
+
+        this.level.coin.forEach((c, index) => {
+            if (this.character.isColliding(c)) {
+                this.level.coin.splice(index, 1);
+                this.coinbar.collectedCoins += 20;
+                this.coinbar.setCollectedCoins(this.coinbar.collectedCoins);
+                
+            }
+        })
+    }
+
+
 
     setWorld() {
         this.character.gameWorld = this;            // = this -> ganze World Instanz, World wird in character gespeichert (in character.js this.world ausreichend)

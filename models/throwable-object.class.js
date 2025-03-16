@@ -38,7 +38,6 @@ class ThrowableObject extends MovableObject {
             this.x += 10;
             this.speedY -= 1;
 
-            if (!this.explodes) {
                 this.playAnimation(this.IMAGES_ROTATION_BOTTLE);
 
                 if(!this.isBottleAboveGround() && !this.explodes) {
@@ -47,7 +46,7 @@ class ThrowableObject extends MovableObject {
                    
                     clearInterval(interval);
                 }
-            }
+            
         }, 25);
     }
 
