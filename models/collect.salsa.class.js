@@ -13,10 +13,7 @@ class Salsa extends MovableObject {
 
         let randomSalsaImg = this.IMAGES_SALSA[Math.floor(Math.random()* this.IMAGES_SALSA.length)];
         this.loadImage(randomSalsaImg);
-        
-
         this.x = 250 + Math.random() * 3500;
     }
-
-    
+  
 }

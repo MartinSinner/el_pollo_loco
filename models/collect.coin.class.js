@@ -18,4 +18,6 @@ class Coin extends MovableObject {
         this.y = 180 + Math.random() * 60;
 
     }
+
+    
 }

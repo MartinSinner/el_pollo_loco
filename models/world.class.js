@@ -81,7 +81,6 @@ class World {
     }
 
     checkCoinCollisions(){
-
         this.level.coin.forEach((c, index) => {
             if (this.character.isColliding(c)) {
                 this.level.coin.splice(index, 1);
@@ -92,6 +91,15 @@ class World {
         })
     }
 
+    checkSalsaCollisions(){
+        this.level.salsa.forEach((s, index) => {
+            if(this.character.isColliding(s)) {
+                this.level.salsa.splice(index, 1);
+                this.salsabar.collectedSalsa += 20;
+                this.salsabar.setCollectedSalsa(this.salsabar.collectedSalsa);
+            }
+        });
+    }
 
 
     setWorld() {
