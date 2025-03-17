@@ -63,9 +63,13 @@ class World {
     }
 
     checkThrowObjects(){
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.salsabar.collectedSalsa > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y);
             this.throwableObjects.push(bottle);
+
+
+            this.salsabar.collectedSalsa -= 20;
+            this.salsabar.setCollectedSalsa(this.salsabar.collectedSalsa);
             
         }
     }
@@ -91,7 +95,7 @@ class World {
         })
     }
 
-    checkSalsaCollisions(){
+     checkSalsaCollisions(){
         this.level.salsa.forEach((s, index) => {
             if(this.character.isColliding(s)) {
                 this.level.salsa.splice(index, 1);

@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-
+    
     explodes = false;
 
     IMAGES_ROTATION_BOTTLE = [
@@ -46,7 +46,7 @@ class ThrowableObject extends MovableObject {
                    
                     clearInterval(interval);
                 }
-            
+
         }, 25);
     }
 
