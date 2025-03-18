@@ -55,14 +55,15 @@ class World {
 
     run() {
         setInterval(() => {
-           this.checkCollisions();
-           this.checkCoinCollisions();
-           this.checkSalsaCollisions();
-           this.checkThrowObjects();
+            this.checkCollisions();
+            this.checkCoinCollisions();
+            this.checkSalsaCollisions();
+            this.checkThrowObjects();
+            this.checkSalsaCollisionEnemy();
         }, 200);
     }
 
-    checkThrowObjects(){
+    checkThrowObjects() {
         if (this.keyboard.D && this.salsabar.collectedSalsa > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y);
             this.throwableObjects.push(bottle);
@@ -70,12 +71,13 @@ class World {
 
             this.salsabar.collectedSalsa -= 20;
             this.salsabar.setCollectedSalsa(this.salsabar.collectedSalsa);
-            
+
+
         }
     }
 
 
-    checkCollisions(){
+    checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
@@ -84,20 +86,36 @@ class World {
         });
     }
 
-    checkCoinCollisions(){
+    checkSalsaCollisionEnemy() {
+        this.throwableObjects.forEach((bottle, bottleIndex) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (bottle.isColliding(enemy) && !bottle.explodes) {
+                    bottle.splash();
+                    enemy.die();
+                    this.level.enemies.splice(enemyIndex, 1);
+
+                    setTimeout(() => {
+                        this.throwableObjects.splice(bottleIndex, 1);
+                    }, 500);
+                }
+            });
+        });
+    }
+
+    checkCoinCollisions() {
         this.level.coin.forEach((c, index) => {
             if (this.character.isColliding(c)) {
                 this.level.coin.splice(index, 1);
                 this.coinbar.collectedCoins += 20;
                 this.coinbar.setCollectedCoins(this.coinbar.collectedCoins);
-                
+
             }
         })
     }
 
-     checkSalsaCollisions(){
+    checkSalsaCollisions() {
         this.level.salsa.forEach((s, index) => {
-            if(this.character.isColliding(s)) {
+            if (this.character.isColliding(s)) {
                 this.level.salsa.splice(index, 1);
                 this.salsabar.collectedSalsa += 20;
                 this.salsabar.setCollectedSalsa(this.salsabar.collectedSalsa);
@@ -108,7 +126,7 @@ class World {
 
     setWorld() {
         this.character.gameWorld = this;            // = this -> ganze World Instanz, World wird in character gespeichert (in character.js this.world ausreichend)
-        
+
     }
 
     draw() {

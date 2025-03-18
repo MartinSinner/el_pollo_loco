@@ -33,5 +33,14 @@ class Chick extends MovableObject {
         }, 200);
     }
 
+    die() {
+        this.playAnimation(this.IMAGES_DEAD); 
+        
+        setTimeout(() => {
+            this.isDead = true;  
+        }, 500);
+    }
+    
+
 
 }
