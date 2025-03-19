@@ -87,12 +87,18 @@ class World {
             } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy);
+                if (enemy instanceof Endboss) {
+                    enemy.attack();
+                    this.character.hit();
+                    this.healthbar.setPercentage(this.character.energy);
+
+                }
             }
         });
     }
 
-    
-     checkSalsaCollisionEnemy() {
+
+    checkSalsaCollisionEnemy() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (bottle.isColliding(enemy) && !bottle.explodes) {
@@ -119,7 +125,14 @@ class World {
                 this.level.coin.splice(index, 1);
                 this.coinbar.collectedCoins += 20;
                 this.coinbar.setCollectedCoins(this.coinbar.collectedCoins);
+            }
 
+            if (this.coinbar.collectedCoins >= 2) {
+                this.level.enemies.forEach(enemy => {
+                    if (enemy instanceof Endboss) {
+                        enemy.startWalking();
+                    }
+                })
             }
         })
     }

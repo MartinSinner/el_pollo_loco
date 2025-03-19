@@ -4,6 +4,7 @@ class Endboss extends MovableObject {
     width = 300;
     height = 300;
     hitCount = 0;
+    speed = 0.8;
     isMoving = false;
     isAttacking = false;
     isHurt = false;
@@ -63,23 +64,42 @@ class Endboss extends MovableObject {
     animate() {
         setInterval(() => {
             if (this.isDead) {
-                this.playAnimation(this.IMAGES_DEAD);
+                this.die();
             } else if (this.isMoving && !this.isAttacking && !this.isHurt && this.speed !== 0) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.isAttacking && !this.isMoving && !this.isHurt && this.speed !== 0) {
+            } else if (this.isAttacking) {
                 this.playAnimation(this.IMAGES_ATTACK)
             } else if (this.isHurt) {
                 this.playAnimation(this.IMAGES_HURT);
             } else {
                 this.playAnimation(this.IMAGES_ALERT);
             }
-        
+
         }, 200);
     }
 
-    startWalking(){
+    startWalking() {
         this.isMoving = true;
         this.moveLeft();
+        this.speed = speed;
+    }
+
+    attack() {
+        if (!this.isAttacking && !this.isHurt && !this.isDead) {
+            this.isAttacking = true;
+            this.speed = 0;
+            setTimeout(() => {
+                this.isAttacking = false;
+                this.speed = 3;
+            }, 200);
+        }
+    }
+    
+    die() {
+        if (!this.isDead) {
+            this.isDead = true;
+            this.playAnimation(this.IMAGES_DEAD);
+        }
     }
 
 }
