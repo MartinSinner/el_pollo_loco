@@ -61,7 +61,7 @@ class World {
             this.checkSalsaCollisions();
             this.checkThrowObjects();
             this.checkSalsaCollisionEnemy();
-        }, 200);
+        }, 20);
     }
 
     checkThrowObjects() {
