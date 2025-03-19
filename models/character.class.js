@@ -1,7 +1,7 @@
 class Character extends MovableObject {
     height = 280;
     width = 120;
-    y = 80;
+    y = 60;
     standingTimer = 0;
     sleepingTimer = 0;
 
@@ -98,7 +98,7 @@ class Character extends MovableObject {
                 this.standingTimer = 0;
             }
 
-            if (this.gameWorld.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.gameWorld.keyboard.SPACE && this.y >= 150) {
                 this.jump();
                 this.standingTimer = 0;
             }

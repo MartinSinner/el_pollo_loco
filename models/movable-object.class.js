@@ -5,8 +5,15 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
-    
-    
+    isJumping = false;
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    }
+
+
 
 
     applyGravity() {
@@ -20,12 +27,11 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        if(this instanceof ThrowableObject){
+        if (this instanceof ThrowableObject) {
             return true;
         } else {
             return this.y < 150
         }
-        
     }
 
     playAnimation(images) {
@@ -49,10 +55,12 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&        // R -> L = Rechte Kante von Pepe berührt linke Kante der Flasche
-            this.y + this.height > mo.y &&         // T -> B = Obere Kante von Pepe berührt untere Kante der Flasche
-            this.x < mo.x + mo.width &&            // L -> R = Linke Kante von Pepe berührt rechte Kante der Flasche
-            this.y < mo.y + mo.height               // B -> T = Untere Kante von Pepe berührt obere Kante der Flasche
+        return (
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&           // R -> L = Rechte Kante von Pepe berührt linke Kante der Flasche
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&         // T -> B = Obere Kante von Pepe berührt untere Kante der Flasche
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&           // L -> R = Linke Kante von Pepe berührt rechte Kante der Flasche
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom            // B -> T = Untere Kante von Pepe berührt obere Kante der Flasche
+        );          
     }
 
     hit() {
@@ -67,8 +75,7 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;     //differenz in milisek
         timepassed = timepassed / 1000;                         //differenz in sek
-        console.log(timepassed);
-        
+
         return timepassed < 1;
     }
 

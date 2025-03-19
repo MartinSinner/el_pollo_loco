@@ -18,7 +18,7 @@ class DrawableObject {
     }
 
     drawBorder(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof Chick) {
+        if (this instanceof Character || this instanceof Chicken || this instanceof Chick || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';

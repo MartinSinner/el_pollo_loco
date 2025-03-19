@@ -12,6 +12,7 @@ class World {
     healthbar = new Healthbar();
     bossbar = new Bossbar();
     throwableObjects = [];
+    bossHits = 0;
 
 
     constructor(canvas, keyboard) {
@@ -78,25 +79,35 @@ class World {
 
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
+                this.character.jump();
+                enemy.die();
+                this.level.enemies.splice(index, 1);
+            } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy);
             }
         });
     }
 
-    checkSalsaCollisionEnemy() {
+    
+     checkSalsaCollisionEnemy() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (bottle.isColliding(enemy) && !bottle.explodes) {
                     bottle.splash();
-                    enemy.die();
-                    this.level.enemies.splice(enemyIndex, 1);
-
-                    setTimeout(() => {
-                        this.throwableObjects.splice(bottleIndex, 1);
-                    }, 500);
+                    if (enemy instanceof Endboss) {
+                        enemy.getHit();
+                        this.bossHits++;
+                        this.bossbar.setBossHits(this.bossHits);
+                    } else {
+                        enemy.die();
+                        this.level.enemies.splice(enemyIndex, 1);
+                        setTimeout(() => {
+                            this.throwableObjects.splice(bottleIndex, 1);
+                        }, 500);
+                    }
                 }
             });
         });
