@@ -12,7 +12,7 @@ class World {
     healthbar = new Healthbar();
     bossbar = new Bossbar();
     throwableObjects = [];
-    bossHits = 0;
+    canThrow = true;
 
 
     constructor(canvas, keyboard) {
@@ -65,7 +65,9 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.salsabar.collectedSalsa > 0) {
+        if (this.keyboard.D && this.salsabar.collectedSalsa > 0 && this.canThrow) {
+            this.canThrow = false;
+
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y);
             this.throwableObjects.push(bottle);
 
@@ -74,6 +76,9 @@ class World {
             this.salsabar.setCollectedSalsa(this.salsabar.collectedSalsa);
 
 
+            setTimeout(() => {
+                this.canThrow = true; 
+            }, 1000);
         }
     }
 
@@ -82,8 +87,11 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround() && this.character.speedY < 0) {
                 this.character.jump();
-                enemy.die();
-                this.level.enemies.splice(index, 1);
+                if (!(enemy instanceof Endboss)) {
+                    enemy.die();
+                    this.level.enemies.splice(index, 1);
+                }
+
             } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy);
@@ -104,16 +112,14 @@ class World {
                 if (bottle.isColliding(enemy) && !bottle.explodes) {
                     bottle.splash();
                     if (enemy instanceof Endboss) {
-                        enemy.getHit();
-                        this.bossHits++;
-                        this.bossbar.setBossHits(this.bossHits);
+                        enemy.hit();
                     } else {
                         enemy.die();
                         this.level.enemies.splice(enemyIndex, 1);
-                        setTimeout(() => {
-                            this.throwableObjects.splice(bottleIndex, 1);
-                        }, 500);
                     }
+                    setTimeout(() => {
+                        this.throwableObjects.splice(bottleIndex, 1);
+                    }, 500);
                 }
             });
         });

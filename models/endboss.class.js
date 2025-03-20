@@ -3,8 +3,7 @@ class Endboss extends MovableObject {
     x = 4800;
     width = 300;
     height = 300;
-    hitCount = 0;
-    speed = 0.8;
+    hitCount = 3;
     isMoving = false;
     isAttacking = false;
     isHurt = false;
@@ -79,10 +78,19 @@ class Endboss extends MovableObject {
     }
 
     startWalking() {
-        this.isMoving = true;
-        this.moveLeft();
-        this.speed = speed;
+        if (!this.isDead && !this.isHurt && !this.isMoving) {
+            this.speed = 0.8;
+            this.isMoving = true;
+    
+            // Bewegt sich kontinuierlich nach links
+            this.movementInterval = setInterval(() => {
+                if (this.isMoving) {
+                    this.moveLeft();
+                }
+            }, 1000 / 60);
+        }
     }
+    
 
     attack() {
         if (!this.isAttacking && !this.isHurt && !this.isDead) {
@@ -90,15 +98,42 @@ class Endboss extends MovableObject {
             this.speed = 0;
             setTimeout(() => {
                 this.isAttacking = false;
-                this.speed = 3;
+                this.speed = 1.5;
             }, 200);
         }
     }
+
+    hit() {
+        if(!this.isDead){
+            this.hitCount--;
+            this.isHurt = true;
+            let previousSpeed = this.speed;
+            this.speed = 0;
+            this.playAnimation(this.IMAGES_HURT);
+            
     
+            setTimeout(() => {
+                this.isHurt = false;
+                this.startWalking(); 
+                this.speed = previousSpeed; 
+                
+            }, 300);
+    
+            if (this.hitCount <= 0) {
+                this.die();
+            }
+        }
+       
+    }
+
     die() {
         if (!this.isDead) {
             this.isDead = true;
+            this.isMoving = false;
             this.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => {
+               
+            }, 1000);
         }
     }
 
