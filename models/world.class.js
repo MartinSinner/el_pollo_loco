@@ -89,7 +89,9 @@ class World {
                 this.character.jump();
                 if (!(enemy instanceof Endboss)) {
                     enemy.die();
-                    this.level.enemies.splice(index, 1);
+                    setTimeout(() => {  
+                        this.level.enemies.splice(index, 1);
+                    }, 300);
                 }
 
             } else if (this.character.isColliding(enemy) && !this.character.isAboveGround()) {
@@ -113,9 +115,13 @@ class World {
                     bottle.splash();
                     if (enemy instanceof Endboss) {
                         enemy.hit();
+                        let bossHealth = (enemy.hitCount / enemy.maxHitCount) * 100;
+                        this.bossbar.setPercentage(bossHealth)
                     } else {
                         enemy.die();
+                       setTimeout(() => {  
                         this.level.enemies.splice(enemyIndex, 1);
+                    }, 300);
                     }
                     setTimeout(() => {
                         this.throwableObjects.splice(bottleIndex, 1);

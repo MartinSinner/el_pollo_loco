@@ -3,7 +3,8 @@ class Endboss extends MovableObject {
     x = 4800;
     width = 300;
     height = 300;
-    hitCount = 3;
+    hitCount = 4;
+    maxHitCount = 4;
     isMoving = false;
     isAttacking = false;
     isHurt = false;

@@ -15,6 +15,7 @@ class Chick extends MovableObject {
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_DEAD);
 
         this.x = 600 + Math.random() * 500;
         this.speed = 0.15 + Math.random() * 0.25;
@@ -29,16 +30,18 @@ class Chick extends MovableObject {
 
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING)
+            if (!this.isDead) {
+                this.playAnimation(this.IMAGES_WALKING)
+            }
         }, 200);
     }
 
     die() {
-        this.playAnimation(this.IMAGES_DEAD); 
-        
+        this.isDead = true;
+        this.loadImage(this.IMAGES_DEAD[0]);  
         setTimeout(() => {
-            this.isDead = true;  
-        }, 500);
+            this.remove(); 
+        }, 1000);
     }
     
 
