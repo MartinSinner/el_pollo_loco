@@ -77,7 +77,7 @@ class World {
 
 
             setTimeout(() => {
-                this.canThrow = true; 
+                this.canThrow = true;
             }, 1000);
         }
     }
@@ -89,7 +89,7 @@ class World {
                 this.character.jump();
                 if (!(enemy instanceof Endboss)) {
                     enemy.die();
-                    setTimeout(() => {  
+                    setTimeout(() => {
                         this.level.enemies.splice(index, 1);
                     }, 300);
                 }
@@ -102,6 +102,13 @@ class World {
                     this.character.hit();
                     this.healthbar.setPercentage(this.character.energy);
 
+                }
+            }
+
+            if (enemy instanceof Endboss) {
+                let distanceToPepe = enemy.x - this.character.x;
+                if (distanceToPepe < 500) {  
+                    this.bossbar.isVisible = true;
                 }
             }
         });
@@ -119,9 +126,9 @@ class World {
                         this.bossbar.setPercentage(bossHealth)
                     } else {
                         enemy.die();
-                       setTimeout(() => {  
-                        this.level.enemies.splice(enemyIndex, 1);
-                    }, 300);
+                        setTimeout(() => {
+                            this.level.enemies.splice(enemyIndex, 1);
+                        }, 300);
                     }
                     setTimeout(() => {
                         this.throwableObjects.splice(bottleIndex, 1);
@@ -185,7 +192,10 @@ class World {
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.salsabar);
-        this.addToMap(this.bossbar);
+
+        if (this.bossbar.isVisible) {
+            this.addToMap(this.bossbar);
+        }
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
 

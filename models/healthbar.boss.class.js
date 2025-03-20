@@ -1,8 +1,8 @@
 class Bossbar extends MovableObject {
     width = 250;
     height = 70;
-
     percentage = 100;
+    isVisible = false;
 
     IMAGES = [
         'img/7_statusbars/2_statusbar_endboss/orange/0.png',
@@ -16,7 +16,7 @@ class Bossbar extends MovableObject {
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.x = 360;
+        this.x = 450;
         this.setPercentage(100);
         this.y = -12;
     }
