@@ -74,72 +74,74 @@ class Character extends MovableObject {
 
     constructor() {
         super().loadImage('img/2_character_pepe/2_walk/W-21.png');
+        this.loadAllImages();
+        this.applyGravity();
+        this.animate();
+    }
+
+    loadAllImages() {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_STANDING);
         this.loadImages(this.IMAGES_SLEEPING);
-        this.applyGravity();
-
-        this.animate();
     }
 
     animate() {
+        let movementInterval = setInterval(() => this.handleMovement(), 1000 / 60);
+        let animationsInterval = setInterval(() => this.handleAnimations(), 100);
 
-        setInterval(() => {
-            if (this.gameWorld.keyboard.RIGHT && this.x < this.gameWorld.level.level_end_x) {           //this.gameWorld ist world instanz -> world.class.js
-                this.moveRight();
-                this.standingTimer = 0;
-            }
-            if (this.gameWorld.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.standingTimer = 0;
-            }
-
-            if (this.gameWorld.keyboard.SPACE && this.y >= 150) {
-                this.jump();
-                this.standingTimer = 0;
-            }
-
-            this.gameWorld.camera_x = -this.x + 100;
-        }, 1000 / 60);
-
-        setInterval(() => {
-            if (!this.gameWorld.keyboard.RIGHT && !this.gameWorld.keyboard.LEFT) {
-                this.standingTimer += 0.1;
-            } else {
-                this.standingTimer = 0;
-            }
-
-            if (this.isDead()) {
-                if(!this.isDeadAnimation){
-                    this.playAnimation(this.IMAGES_DEAD);
-                    this.isDeadAnimation = true;
-                    this.gameOver();
-                    
-                }
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.standingTimer >= 3) {
-                this.playAnimation(this.IMAGES_SLEEPING);
-            } else if (!this.gameWorld.keyboard.RIGHT && !this.gameWorld.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_STANDING);
-            } else if (this.gameWorld.keyboard.RIGHT || this.gameWorld.keyboard.LEFT) {
-                this.playAnimation(this.IMAGES_WALKING);
-            }
-        }, 100);
+        gameIntervals.push(movementInterval, animationsInterval);
     }
 
-    gameOver(){
+    handleMovement() {
+        const kb = this.gameWorld.keyboard;
+        if (kb.RIGHT && this.x < this.gameWorld.level.level_end_x) this.moveRightAction();
+        if (kb.LEFT && this.x > 0) this.moveLeftAction();
+        if (kb.SPACE && this.y >= 150) this.jumpAction();
+        this.gameWorld.camera_x = -this.x + 100;
+    }
+
+    moveRightAction() {
+        this.moveRight();
+        this.standingTimer = 0;
+    }
+
+    moveLeftAction() {
+        this.moveLeft();
+        this.otherDirection = true;
+        this.standingTimer = 0;
+    }
+
+    jumpAction() {
+        this.jump();
+        this.standingTimer = 0;
+    }
+
+    handleAnimations() {
+        const kb = this.gameWorld.keyboard;
+        if (!kb.RIGHT && !kb.LEFT) this.standingTimer += 0.1;
+        else this.standingTimer = 0;
+
+        if (this.isDead() && !this.isDeadAnimation) return this.handleDeath();
+        if (this.isHurt()) this.playAnimation(this.IMAGES_HURT);
+        else if (this.isAboveGround()) this.playAnimation(this.IMAGES_JUMPING);
+        else if (this.standingTimer >= 3) this.playAnimation(this.IMAGES_SLEEPING);
+        else if (!kb.RIGHT && !kb.LEFT) this.playAnimation(this.IMAGES_STANDING);
+        else this.playAnimation(this.IMAGES_WALKING);
+    }
+
+    handleDeath() {
+        this.playAnimation(this.IMAGES_DEAD);
+        this.isDeadAnimation = true;
+        this.gameOver();
+    }
+
+    gameOver() {
         let gameOver = document.getElementById('gameOver');
         gameOver.classList.remove('dNone');
     }
-    
-
 
 }
 

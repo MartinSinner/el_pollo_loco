@@ -53,16 +53,22 @@ class Endboss extends MovableObject {
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
+        this.loadAllImages();
+        this.animate();
+    }
+
+    loadAllImages() {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_ALERT);
         this.loadImages(this.IMAGES_ATTACK);
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_DEAD);
-        this.animate();
     }
 
+
+
     animate() {
-        setInterval(() => {
+       let movementAnimation = setInterval(() => {
             if (this.isDead) {
                 this.die();
             } else if (this.isMoving && !this.isAttacking && !this.isHurt && this.speed !== 0) {
@@ -76,6 +82,8 @@ class Endboss extends MovableObject {
             }
 
         }, 200);
+
+        gameIntervals.push(movementAnimation);
     }
 
     startWalking() {
@@ -83,12 +91,13 @@ class Endboss extends MovableObject {
             this.speed = 0.8;
             this.isMoving = true;
     
-            // Bewegt sich kontinuierlich nach links
-            this.movementInterval = setInterval(() => {
+            let movementInterval = setInterval(() => {
                 if (this.isMoving) {
                     this.moveLeft();
                 }
             }, 1000 / 60);
+
+            gameIntervals.push(movementInterval);
         }
     }
     

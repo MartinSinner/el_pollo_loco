@@ -12,7 +12,6 @@ class World {
     throwableObjects = [];
     canThrow = true;
 
-
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -21,15 +20,17 @@ class World {
         this.setWorld();
         this.run();
     }
-    
+
     run() {
-        setInterval(() => {
+        let runInterval = setInterval(() => {
             this.checkCollisions();
             this.checkCoinCollisions();
             this.checkSalsaCollisions();
             this.checkThrowObjects();
             this.checkSalsaCollisionEnemy();
         }, 20);
+
+        gameIntervals.push(runInterval);
     }
 
     checkThrowObjects() {
