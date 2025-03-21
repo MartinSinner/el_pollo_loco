@@ -3,9 +3,8 @@
 body {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
-    background-image: url("img/background/blurred_image.png");
+    background-image: url("img/background/background.png");
     background-size: cover;
     height: 100vh;
     margin: 0;
@@ -17,15 +16,13 @@ body {
 h1 {
     font-family: 'Lobster', cursive;
     font-size: 60px;
-    background: linear-gradient(90deg, #FFD700, #FF4500);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    color: rgb(50, 49, 49);
+   
 }
 
 
 canvas {
    border-radius: 10px;
-    margin-bottom: 140px;
+   
 
 }
