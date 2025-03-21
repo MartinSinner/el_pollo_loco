@@ -70,29 +70,6 @@ canvas {
     cursor: pointer;
 }
 
-.loadingContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8); 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #FFD700; 
-    font-size: 24px;
-    font-weight: bold;
-    z-index: 1000;
-}
-
-.loadingGif {
-    width: 200px; 
-    height: auto;
-    margin-bottom: 25px;
-}
-
 .dNone {
     display: none;
 }

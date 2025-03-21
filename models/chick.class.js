@@ -2,6 +2,7 @@ class Chick extends MovableObject {
     y = 370;
     height = 60;
     width = 70;
+    isDead = false;
 
     IMAGES_WALKING = [
         'img/3_enemies_chicken/chicken_small/1_walk/2_w.png',
@@ -40,7 +41,7 @@ class Chick extends MovableObject {
         this.isDead = true;
         this.loadImage(this.IMAGES_DEAD[0]);  
         setTimeout(() => {
-            this.remove(); 
+            
         }, 1000);
     }
     

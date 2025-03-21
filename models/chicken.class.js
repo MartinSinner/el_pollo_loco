@@ -43,7 +43,7 @@ class Chicken extends MovableObject {
         this.isDead = true; 
         this.loadImage(this.IMAGES_DEAD[0]);  
         setTimeout(() => {
-            this.remove(); 
+            
         }, 1000);
     }
     

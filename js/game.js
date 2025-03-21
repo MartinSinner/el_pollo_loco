@@ -7,13 +7,9 @@ function init(){
     world = new World(canvas, keyboard);    
 }
 
-function resetGame() {
-    document.getElementById('loadingScreen').classList.remove('dNone'); // GIF anzeigen
-
-    setTimeout(() => {
-        location.reload(); // Nach 1 Sekunde das Spiel neu laden
-    }, 1000);
+function resetGame(){
+    const gameOver = document.getElementById('gameOver');
+    gameOver.classList.add('dNone');
+    world.character.energy = 100;
 }
-
-
 
