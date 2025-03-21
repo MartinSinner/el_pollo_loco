@@ -13,9 +13,17 @@
     
         <h1>El Pollo Loco</h1>
 
-        <div id="gameContainer">
             <canvas id="canvas" width="720" height="480"></canvas>
-        </div>
+            <div id="gameOver" class="gameOver dNone">
+                <button class="button" onclick="resetGame()">Try Again!</button>
+                <button class="button" onclick="mainMenu()">Give up</button>
+            </div>
+            <div id="loadingScreen" class="loadingContainer dNone">
+                <img src="img/6_salsa_bottle/bottle_rotation/rotation_sequences.gif" alt="Loading..." class="loadingGif">
+                <p>Restart...</p>
+            </div>
+            
+        
 
 
 

@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-    
+
     explodes = false;
 
     IMAGES_ROTATION_BOTTLE = [
@@ -35,17 +35,16 @@ class ThrowableObject extends MovableObject {
         this.applyGravity();
 
         let interval = setInterval(() => {
-            this.x += 10;
-            this.speedY -= 1;
-
+            if (!this.explodes) {
+                this.x += 10;
+                this.speedY -= 1;
                 this.playAnimation(this.IMAGES_ROTATION_BOTTLE);
+            }
 
-                if(!this.isBottleAboveGround() && !this.explodes) {
-                    this.splash();
-                    this.speedY = 0;
-                   
-                    clearInterval(interval);
-                }
+            if (!this.isBottleAboveGround() && !this.explodes) {
+                this.splash();
+                clearInterval(interval);
+            }
 
         }, 25);
     }
@@ -53,9 +52,11 @@ class ThrowableObject extends MovableObject {
     isBottleAboveGround() {
         return this.y < 360;
     }
-    
+
     splash() {
         this.explodes = true;
+          this.speedY = 0;
+       
         this.playAnimation(this.IMAGES_SPLASH_BOTTLE);
     }
 

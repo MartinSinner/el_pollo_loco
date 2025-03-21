@@ -117,6 +117,8 @@ class Character extends MovableObject {
                 if(!this.isDeadAnimation){
                     this.playAnimation(this.IMAGES_DEAD);
                     this.isDeadAnimation = true;
+                    this.gameOver();
+                    
                 }
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
@@ -130,6 +132,11 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_WALKING);
             }
         }, 100);
+    }
+
+    gameOver(){
+        let gameOver = document.getElementById('gameOver');
+        gameOver.classList.remove('dNone');
     }
     
 

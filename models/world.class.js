@@ -107,7 +107,7 @@ class World {
 
             if (enemy instanceof Endboss) {
                 let distanceToPepe = enemy.x - this.character.x;
-                if (distanceToPepe < 500) {  
+                if (distanceToPepe < 500) {
                     this.bossbar.isVisible = true;
                 }
             }
@@ -118,25 +118,34 @@ class World {
     checkSalsaCollisionEnemy() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
-                if (bottle.isColliding(enemy) && !bottle.explodes) {
+                let bottleHitsEnemy = 
+                    bottle.x + bottle.width > enemy.x + enemy.width * 0.2 && 
+                    bottle.y + bottle.height > enemy.y + enemy.height * 0.3; 
+    
+                if (bottleHitsEnemy && !bottle.explodes) {
                     bottle.splash();
+                    bottle.speedY = 0;  
+                    bottle.x = bottle.x; 
+                    bottle.y = enemy.y + enemy.height * 0.2; 
+    
                     if (enemy instanceof Endboss) {
                         enemy.hit();
                         let bossHealth = (enemy.hitCount / enemy.maxHitCount) * 100;
-                        this.bossbar.setPercentage(bossHealth)
+                        this.bossbar.setPercentage(bossHealth);
                     } else {
                         enemy.die();
                         setTimeout(() => {
                             this.level.enemies.splice(enemyIndex, 1);
-                        }, 300);
+                        }, 600);
                     }
                     setTimeout(() => {
                         this.throwableObjects.splice(bottleIndex, 1);
-                    }, 500);
+                    }, 200);
                 }
             });
         });
     }
+    
 
     checkCoinCollisions() {
         this.level.coin.forEach((c, index) => {
