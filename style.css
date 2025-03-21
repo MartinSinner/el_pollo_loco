@@ -1,9 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 body {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
+    background-image: url("img/background/blurred_image.png");
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+     
 }
 
+
+h1 {
+    font-family: 'Lobster', cursive;
+    font-size: 60px;
+    background: linear-gradient(90deg, #FFD700, #FF4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+
 canvas {
-    background-color: black;
+   border-radius: 10px;
+    margin-bottom: 140px;
+
 }
