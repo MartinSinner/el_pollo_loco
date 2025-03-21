@@ -45,8 +45,9 @@ class ThrowableObject extends MovableObject {
                 this.splash();
                 clearInterval(interval);
             }
-
         }, 25);
+
+        gameIntervals.push(interval)
     }
 
     isBottleAboveGround() {

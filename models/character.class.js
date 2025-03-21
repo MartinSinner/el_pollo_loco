@@ -99,7 +99,7 @@ class Character extends MovableObject {
         const kb = this.gameWorld.keyboard;
         if (kb.RIGHT && this.x < this.gameWorld.level.level_end_x) this.moveRightAction();
         if (kb.LEFT && this.x > 0) this.moveLeftAction();
-        if (kb.SPACE && this.y >= 150) this.jumpAction();
+        if (kb.SPACE && this.y >= 150 && !this.isHurt()) this.jumpAction();
         this.gameWorld.camera_x = -this.x + 100;
     }
 

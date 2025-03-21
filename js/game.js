@@ -12,6 +12,8 @@ function resetGame(){
     gameOver.classList.add('dNone');
     
     if(world) {
+        world.stopDrawing();
+        clearAllIntervals();
         world = null;
     }
     
