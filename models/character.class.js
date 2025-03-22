@@ -141,6 +141,7 @@ class Character extends MovableObject {
     gameOver() {
         let gameOver = document.getElementById('gameOver');
         gameOver.classList.remove('dNone');
+        isGameOver = true;
     }
 
 }

@@ -176,7 +176,7 @@ class World {
 
 
     draw() {
-        if (isGamePaused) return;
+        if (isGamePaused || isGameOver) return;
         this.clearCanvas();
         this.ctx.translate(this.camera_x, 0);
         this.drawBackground();

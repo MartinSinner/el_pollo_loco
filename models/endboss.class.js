@@ -141,10 +141,18 @@ class Endboss extends MovableObject {
             this.isDead = true;
             this.isMoving = false;
             this.playAnimation(this.IMAGES_DEAD);
+
             setTimeout(() => {
-               
+                this.youWin();
             }, 1000);
+            
         }
+    }
+
+    youWin() {
+        let youWin = document.getElementById('youWin');
+        youWin.classList.remove('dNone');
+        isGameOver = true;
     }
 
 }

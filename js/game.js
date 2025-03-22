@@ -1,8 +1,14 @@
 let canvas;
 let keyboard = new Keyboard();
 let isGamePaused = false;
+let isGameOver = false;
+
 
 function init(){
+    const startGame = document.getElementById('intro');
+    startGame.classList.add('dNone');
+    const startButtons = document.getElementById('buttonsMainMenu')
+    startButtons.classList.add('dNone');
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);    
 }
@@ -13,14 +19,20 @@ function pauseGame(){
 }
 
 function resumeGame(){
-    document.getElementById('resumeOverlay').classList.add('dNone');
     isGamePaused = false;
+    document.getElementById('resumeOverlay').classList.add('dNone');
+   
     requestAnimationFrame(() => world.draw());
 }
 
 function resetGame(){
+    isGamePaused = false;
+    isGameOver = false;
     const gameOver = document.getElementById('gameOver');
     gameOver.classList.add('dNone');
+    const youWin = document.getElementById('youWin');
+    youWin.classList.add('dNone');
+    
     
     if(world) {
         world.stopDrawing();

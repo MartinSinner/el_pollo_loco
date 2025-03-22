@@ -9,8 +9,15 @@
 
 </head>
 
-<body onload="init()">
+<body onload="">
 
+    <!-- main menu-->
+    <div id="buttonsMainMenu" class="buttonsMainMenu">
+        <button onclick="init()" class="button" id="startGame"></button>
+        <button onclick="howToPlay()" class="button"></button>
+        <button onclick="openImpressum()" class="button"></button>
+    </div>
+    <img id="intro" class="intro" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen">
     <h1>El Pollo Loco</h1>
 
     <div class="gameContainer">
@@ -20,6 +27,12 @@
         <div id="gameOver" class="gameOver dNone">
             <button class="button" onclick="resetGame()">Try Again!</button>
             <button class="button" onclick="mainMenu()">Give up</button>
+        </div>
+
+        <!-- you win menu-->
+        <div id="youWin" class="youWin dNone">
+            <button class="button" onclick="resetGame()">Restart</button>
+            <button class="button" onclick="mainMenu()">Main Menu</button>
         </div>
 
         <!-- pause menu-->
