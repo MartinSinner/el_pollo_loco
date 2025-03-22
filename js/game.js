@@ -1,10 +1,21 @@
 let canvas;
 let keyboard = new Keyboard();
-
+let isGamePaused = false;
 
 function init(){
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);    
+}
+
+function pauseGame(){
+    document.getElementById('resumeOverlay').classList.remove('dNone');
+    isGamePaused = true;
+}
+
+function resumeGame(){
+    document.getElementById('resumeOverlay').classList.add('dNone');
+    isGamePaused = false;
+    requestAnimationFrame(() => world.draw());
 }
 
 function resetGame(){

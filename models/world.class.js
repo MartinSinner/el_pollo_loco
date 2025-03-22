@@ -25,7 +25,11 @@ class World {
 
 
     run() {
-        let runInterval = setInterval(() => this.checkAll(), 20);
+        let runInterval = setInterval(() => {
+            if (isGamePaused) return;
+            this.checkAll()
+        }, 20);
+
         gameIntervals.push(runInterval);
     }
 
@@ -69,7 +73,7 @@ class World {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
             this.character.jump();
             if (!(enemy instanceof Endboss)) this.removeEnemy(enemy, index);
-           
+
         } else if (!this.character.isAboveGround()) {
             this.character.hit();
             this.healthbar.setPercentage(this.character.energy);
@@ -172,6 +176,7 @@ class World {
 
 
     draw() {
+        if (isGamePaused) return;
         this.clearCanvas();
         this.ctx.translate(this.camera_x, 0);
         this.drawBackground();
@@ -181,11 +186,11 @@ class World {
         this.ctx.translate(this.camera_x, 0);
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
-        
+
         this.animationFrameId = requestAnimationFrame(() => this.draw());
     }
 
-    stopDrawing(){
+    stopDrawing() {
         cancelAnimationFrame(this.animationFrameId);
     }
 
@@ -243,7 +248,7 @@ class World {
         this.ctx.restore();
         mo.x = mo.x * -1;
     }
-    
+
 }
 
 

@@ -10,18 +10,32 @@
 </head>
 
 <body onload="init()">
-    
-        <h1>El Pollo Loco</h1>
 
-            <canvas id="canvas" width="720" height="480"></canvas>
-            <div id="gameOver" class="gameOver dNone">
-                <button class="button" onclick="resetGame()">Try Again!</button>
-                <button class="button" onclick="mainMenu()">Give up</button>
-            </div>
-            <div id="loadingScreen" class="loadingContainer dNone">
-                <img src="img/6_salsa_bottle/bottle_rotation/rotation_sequences.gif" alt="Loading..." class="loadingGif">
-                <p>Restart...</p>
-            </div>
+    <h1>El Pollo Loco</h1>
+
+    <div class="gameContainer">
+        <canvas id="canvas" width="720" height="480"></canvas>
+
+        <!-- game over menu-->
+        <div id="gameOver" class="gameOver dNone">
+            <button class="button" onclick="resetGame()">Try Again!</button>
+            <button class="button" onclick="mainMenu()">Give up</button>
+        </div>
+
+        <!-- pause menu-->
+        <div id="pauseOverlay" class="pauseOverlay">
+            <img src="img/background/pause.png" onclick="pauseGame()" alt="pause">
+            <img src="img/background/volume.png" class="volumeIcon" onclick="muteGame()" alt="volume">
+        </div>
+
+        <!-- resume menu-->
+        <div id="resumeOverlay" class="resumeOverlay dNone">
+            <p>Resume
+                <img src="img/background/play.png" onclick="resumeGame()" alt="play">
+            </p>
+        </div>
+    </div>
+
 </body>
 
 <!-- global-->
