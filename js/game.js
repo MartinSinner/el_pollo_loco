@@ -1,6 +1,27 @@
 let canvas;
 let keyboard = new Keyboard();
 let world;
+let intro_music = new Audio('audio/audio_intro.mp3');
+let background_music = new Audio('audio/audio_backgroundmusic.mp3');
+
+let chicken_sound = new Audio('audio/audio_chicken.mp3');
+let chick_sound = new Audio('audio/audio_chick.mp3');
+let endboss_hurt_sound = new Audio('audio/audio_endbosshurt.mp3');
+let endboss_death_sound = new Audio('audio/audio_endbossdead.wav');
+
+let pepe_walking_sound = new Audio('audio/audio_running.mp3');
+let pepe_jump_sound = new Audio('audio/audio_pepejump.mp3');
+let pepe_hurt_sound = new Audio('audio/audio_pepehurt.mp3');
+let pepe_sleeping_sound = new Audio('audio/audio_pepesleeps.mp3');
+
+let bottle_throw_sound = new Audio('audio/audio_throw.mp3');
+let bottle_splash_sound = new Audio('audio/audio_salsa-splash.mp3');
+let collect_bottle_sound = new Audio('audio/audio_bottle.mp3');
+let collect_coin_sound  = new Audio('audio/audio_collect-coin.mp3');
+
+let gameover_sound = new Audio('audio/audio_gameover.mp3');
+let win_sound = new Audio('audio/audio_winning.mp3');
+
 let isGamePaused = false;
 let isGameOver = false;
 
