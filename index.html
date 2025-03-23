@@ -13,11 +13,43 @@
 
     <!-- main menu-->
     <div id="buttonsMainMenu" class="buttonsMainMenu">
-        <button onclick="init()" class="button" id="startGame"><p>START GAME 🎮</p></button>
-        <button onclick="howToPlay()" class="button"><p>HOW TO PLAY ❓</p></button>
-        <button onclick="openImpressum()" class="button"><p>IMPRESSUM 📋</p></button>
+        <button onclick="init()" class="button" id="startGame">
+            <p>START GAME 🎮</p>
+        </button>
+        <button onclick="howToPlay()" class="button">
+            <p>HOW TO PLAY ❓</p>
+        </button>
+        <button onclick="openImpressum()" class="button">
+            <p>IMPRESSUM 📋</p>
+        </button>
     </div>
     <img id="intro" class="intro" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="Startscreen">
+
+    <!-- how to play -->
+    <div id="howToPlayOverlay" class="infoOverlay dNone">
+        <div class="infoContent">
+            <h2>HOW TO PLAY ❓</h2>
+            <ul>
+                <li>⬅️ ➡️ – MOVE LEFT OR RIGHT</li>
+                <li>⎵ SPACE – JUMP</li>
+                <li>D – THROW  BOTTLE </li>
+                <li>🪙 COLLECT COINS TO FIGHT ENDBOSS</li>
+            </ul>
+            <button class="button" onclick="closeHowToPlay()">BACK</button>
+        </div>
+    </div>
+
+    <!-- impressum -->
+    <div id="impressumOverlay" class="infoOverlay dNone">
+        <div class="infoContent">
+            <h2>IMPRESSUM 📋</h2>
+            <p>NAME: MARTIN SINNER</p>
+            <p>TEL.NR: 01771531363</p>
+            <p>E-MAIL: m-sinner@web.de</p>
+            <button class="button" onclick="closeImpressum()">Zurück</button>
+        </div>
+    </div>
+
     <h1>El Pollo Loco</h1>
 
     <div class="gameContainer">

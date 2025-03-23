@@ -12,7 +12,6 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
-
 function hideMainMenu() {
     document.getElementById('intro').classList.add('dNone');
     document.getElementById('buttonsMainMenu').classList.add('dNone');
@@ -110,6 +109,22 @@ function resetGame() {
 function clearAllIntervals() {
     gameIntervals.forEach(clearInterval);
     gameIntervals = [];
+}
+
+function howToPlay() {
+    document.getElementById('howToPlayOverlay').classList.remove('dNone');
+}
+
+function closeHowToPlay() {
+    document.getElementById('howToPlayOverlay').classList.add('dNone');
+}
+
+function openImpressum() {
+    document.getElementById('impressumOverlay').classList.remove('dNone');
+}
+
+function closeImpressum() {
+    document.getElementById('impressumOverlay').classList.add('dNone');
 }
 
 
