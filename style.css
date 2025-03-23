@@ -23,14 +23,21 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 40px;
     padding-top: 54px;
     z-index: 11;
 }
 
 .buttonsMainMenu button {
-   padding: 25px 70px !important;
+   padding: 0px 60px !important;
+   border-radius: 20px !important;
+   cursor: pointer !important;
 }
+
+.buttonsMainMenu button p {
+    font-size: 30px;
+}
+
 
 
 
@@ -118,6 +125,7 @@ canvas {
 .button:hover {
     background: linear-gradient(180deg, #FF4500, #8B0000);
     transform: scale(1.1);
+    color: white;
     cursor: pointer;
 }
 

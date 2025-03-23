@@ -1,47 +1,35 @@
 let canvas;
 let keyboard = new Keyboard();
+let world;
 let isGamePaused = false;
 let isGameOver = false;
 
 
-function init(){
-    const startGame = document.getElementById('intro');
-    startGame.classList.add('dNone');
-    const startButtons = document.getElementById('buttonsMainMenu')
-    startButtons.classList.add('dNone');
+function init() {
+    hideMainMenu();
+    resetWorld();
+    createLevel();
+    world = new World(canvas, keyboard);
+}
+
+
+function hideMainMenu() {
+    document.getElementById('intro').classList.add('dNone');
+    document.getElementById('buttonsMainMenu').classList.add('dNone');
     canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);    
 }
 
-function pauseGame(){
-    document.getElementById('resumeOverlay').classList.remove('dNone');
-    isGamePaused = true;
-}
 
-function resumeGame(){
-    isGamePaused = false;
-    document.getElementById('resumeOverlay').classList.add('dNone');
-   
-    requestAnimationFrame(() => world.draw());
-}
-
-function resetGame(){
-    isGamePaused = false;
-    isGameOver = false;
-    const gameOver = document.getElementById('gameOver');
-    gameOver.classList.add('dNone');
-    const youWin = document.getElementById('youWin');
-    youWin.classList.add('dNone');
-    
-    
-    if(world) {
+function resetWorld() {
+    if (world) {
         world.stopDrawing();
         clearAllIntervals();
         world = null;
     }
-    
+}
 
-   
+
+function createLevel() {
     level1 = new Level(
         [
             new Chicken(),
@@ -71,12 +59,55 @@ function resetGame(){
             new Coin()
         ]
     );
+}
 
-   
+
+function mainMenu() {
+    resetWorld();
+    isGamePaused = false;
+    isGameOver = false;
+    showMainMenu();
+}
+
+
+function showMainMenu() {
+    document.getElementById('intro').classList.remove('dNone');
+    document.getElementById('buttonsMainMenu').classList.remove('dNone');
+    hideGameOverOrWinScreen();
+}
+
+
+function hideGameOverOrWinScreen(){
+    document.getElementById('gameOver').classList.add('dNone');
+    document.getElementById('youWin').classList.add('dNone');
+    document.getElementById('resumeOverlay').classList.add('dNone');
+}
+
+
+function pauseGame() {
+    document.getElementById('resumeOverlay').classList.remove('dNone');
+    isGamePaused = true;
+}
+
+
+function resumeGame() {
+    document.getElementById('resumeOverlay').classList.add('dNone');
+    isGamePaused = false;
+    requestAnimationFrame(() => world.draw());
+}
+
+
+function resetGame() {
+    isGamePaused = false;
+    isGameOver = false;
+    hideGameOverOrWinScreen();
+    resetWorld();
+    createLevel();
     world = new World(canvas, keyboard);
 }
 
-function clearAllIntervals(){
+
+function clearAllIntervals() {
     gameIntervals.forEach(clearInterval);
     gameIntervals = [];
 }
