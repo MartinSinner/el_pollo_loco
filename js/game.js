@@ -22,14 +22,43 @@ let collect_coin_sound  = new Audio('audio/audio_collect-coin.mp3');
 let gameover_sound = new Audio('audio/audio_gameover.mp3');
 let win_sound = new Audio('audio/audio_winning.mp3');
 
+let isMuted = localStorage.getItem('isMuted') === "true";
+
 let isGamePaused = false;
 let isGameOver = false;
 
+
+
+// Audio & Music
+
+document.addEventListener('DOMContentLoaded', () => {
+    const firstClickScreen = document.getElementById('firstClickScreen');
+
+    firstClickScreen.addEventListener('click', () => {
+        startIntroMusic(); // deine Funktion zum Starten der Musik
+        firstClickScreen.classList.add('dNone');
+        document.getElementById('buttonsMainMenu').classList.remove('dNone');
+        document.getElementById('intro').classList.remove('dNone');
+    });
+});
+
+
+function startIntroMusic(){
+    if (!isMuted) {
+        intro_music.play();
+    }
+}
+
+function stopIntroMusic(){
+    intro_music.pause();
+}
 
 function init() {
     hideMainMenu();
     resetWorld();
     createLevel();
+    stopIntroMusic()
+    
     world = new World(canvas, keyboard);
 }
 
@@ -94,6 +123,7 @@ function showMainMenu() {
     document.getElementById('intro').classList.remove('dNone');
     document.getElementById('buttonsMainMenu').classList.remove('dNone');
     hideGameOverOrWinScreen();
+    startIntroMusic();
 }
 
 
@@ -147,6 +177,7 @@ function openImpressum() {
 function closeImpressum() {
     document.getElementById('impressumOverlay').classList.add('dNone');
 }
+
 
 
 
