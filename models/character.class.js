@@ -4,6 +4,8 @@ class Character extends MovableObject {
     y = 60;
     standingTimer = 0;
     sleepingTimer = 0;
+    isDeadAnimation = false;
+
 
     IMAGES_WALKING = [
         'img/2_character_pepe/2_walk/W-22.png',
@@ -90,7 +92,7 @@ class Character extends MovableObject {
 
     animate() {
         let movementInterval = setInterval(() => this.handleMovement(), 1000 / 60);
-        let animationsInterval = setInterval(() => this.handleAnimations(), 100);
+        let animationsInterval = setInterval(() => this.handleAnimations(), 150);
 
         gameIntervals.push(movementInterval, animationsInterval);
     }
@@ -122,34 +124,45 @@ class Character extends MovableObject {
     handleAnimations() {
         if (isGamePaused || isGameOver) return;
 
-        const kb = this.gameWorld.keyboard;
-        if (!kb.RIGHT && !kb.LEFT) this.standingTimer += 0.1;
-        else this.standingTimer = 0;
-
+        if (this.isDeadAnimation) return this.playAnimation(this.IMAGES_DEAD);
         if (this.isDead() && !this.isDeadAnimation) return this.handleDeath();
-        if (this.isHurt()) this.playAnimation(this.IMAGES_HURT);
-        else if (this.isAboveGround()) this.playAnimation(this.IMAGES_JUMPING);
-        else if (this.standingTimer >= 3 && !isGamePaused) {
-            this.playAnimation(this.IMAGES_SLEEPING);
-            pepe_sleeping_sound.play();
+        if (this.isHurt()) return this.playAnimation(this.IMAGES_HURT);
+        if (this.isAboveGround()) return this.playAnimation(this.IMAGES_JUMPING);
 
-        }
+        const kb = this.gameWorld.keyboard;
+        const isIdle = !kb.RIGHT && !kb.LEFT;
 
-        else if (!kb.RIGHT && !kb.LEFT) {
-            this.playAnimation(this.IMAGES_STANDING);
-            pepe_walking_sound.pause();
-        } else {
-            this.playAnimation(this.IMAGES_WALKING);
-            pepe_sleeping_sound.pause();
-            pepe_walking_sound.play();
-        }
+        isIdle ? this.standingTimer += 0.1 : this.standingTimer = 0;
+
+        if (isIdle && this.standingTimer >= 4 && !isGamePaused) return this.sleeping();
+        if (isIdle) return this.standing();
+
+        this.walking();
+    }
+
+    sleeping() {
+        this.playAnimation(this.IMAGES_SLEEPING);
+        pepe_sleeping_sound.play();
+    }
+
+    standing() {
+        this.playAnimation(this.IMAGES_STANDING);
+        pepe_walking_sound.pause();
+    }
+
+    walking() {
+        this.playAnimation(this.IMAGES_WALKING);
+        pepe_sleeping_sound.pause();
+        pepe_walking_sound.play();
     }
 
     handleDeath() {
-        this.playAnimation(this.IMAGES_DEAD);
         this.isDeadAnimation = true;
-        this.gameOver();
+        this.currentImage = 0;
+
+        setTimeout(() => this.gameOver(), this.IMAGES_DEAD.length * 120);
     }
+
 
     gameOver() {
         let gameOver = document.getElementById('gameOver');
@@ -157,11 +170,10 @@ class Character extends MovableObject {
         isGameOver = true;
         gameover_sound.play();
         stopBackgroundMusic();
-        
 
         pepe_sleeping_sound.pause();
         pepe_sleeping_sound.currentTime = 0;
-        
+
         pepe_hurt_sound.pause();
         pepe_hurt_sound.currentTime = 0;
 

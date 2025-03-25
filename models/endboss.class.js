@@ -92,6 +92,7 @@ class Endboss extends MovableObject {
             this.isMoving = true;
 
             let movementInterval = setInterval(() => {
+                if(isGamePaused || isGameOver) return;
                 if (this.isMoving) {
                     this.moveLeft();
                 }

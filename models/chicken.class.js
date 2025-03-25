@@ -25,7 +25,10 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        const moveInterval = setInterval(() => this.moveLeft(), 1000 / 60);
+        const moveInterval = setInterval(() => {
+            if (isGamePaused || isGameOver) return;
+            this.moveLeft();
+        }, 1000 / 60);
 
 
         const walkingInterval = setInterval(() => {
@@ -34,18 +37,18 @@ class Chicken extends MovableObject {
             }
         }, 200);
 
-        gameIntervals.push(moveInterval, walkingInterval);
+        gameIntervals.push(moveInterval, walkingInterval)
     }
 
 
     die() {
-        this.isDead = true; 
-        this.loadImage(this.IMAGES_DEAD[0]);  
+        this.isDead = true;
+        this.loadImage(this.IMAGES_DEAD[0]);
         setTimeout(() => {
-            
+
         }, 1000);
     }
-    
+
 
 
 

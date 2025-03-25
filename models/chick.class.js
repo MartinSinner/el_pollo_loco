@@ -25,7 +25,11 @@ class Chick extends MovableObject {
     }
 
     animate() {
-        const moveInterval = setInterval(() => this.moveLeft(), 1000 / 60);
+        const moveInterval = setInterval(() => {
+            if(isGamePaused || isGameOver) return;
+            this.moveLeft();
+        }, 1000 / 60);
+        
         const walkingInterval = setInterval(() => {
             if (!this.isDead) {
                 this.playAnimation(this.IMAGES_WALKING)

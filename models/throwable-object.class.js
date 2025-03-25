@@ -39,8 +39,9 @@ class ThrowableObject extends MovableObject {
                 this.x += 10;
                 this.speedY -= 1;
                 this.playAnimation(this.IMAGES_ROTATION_BOTTLE);
-                bottle_throw_sound.play();
                 bottle_throw_sound.currentTime = 0;
+                bottle_throw_sound.play();
+                
             }
 
             if (!this.isBottleAboveGround() && !this.explodes) {

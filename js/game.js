@@ -4,7 +4,8 @@ let world;
 let intro_music = new Audio('audio/audio_intro.mp3');
 intro_music.volume = 0.5;
 let background_music = new Audio('audio/audio_backgroundmusic.mp3');
-background_music.volume = 0.2;
+background_music.volume = 0.05;
+let click_sound = new Audio('audio/click.mp3');
 
 let chicken_sound = new Audio('audio/audio_chicken.mp3');
 chicken_sound.volume = 0.5;
@@ -18,7 +19,7 @@ pepe_jump_sound.volume= 1;
 let pepe_hurt_sound = new Audio('audio/audio_pepehurt.mp3');
 pepe_hurt_sound.volume = 0.6;
 let pepe_sleeping_sound = new Audio('audio/audio_pepesleeps.mp3');
-pepe_sleeping_sound.volume = 0.1;
+pepe_sleeping_sound.volume = 0.05;
 
 let bottle_throw_sound = new Audio('audio/audio_throw.mp3');
 let bottle_splash_sound = new Audio('audio/audio_salsa-splash.mp3');
@@ -48,6 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('buttonsMainMenu').classList.remove('dNone');
         document.getElementById('intro').classList.remove('dNone');
     });
+});
+
+document.querySelectorAll('.button').forEach(button => {
+    button.addEventListener('click', () => {
+        const sound = document.getElementById('buttonSound');
+        sound.currentTime = 0;
+        sound.play();
+    });
+  
 });
 
 
