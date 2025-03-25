@@ -12,9 +12,9 @@ class MovableObject extends DrawableObject {
         left: 0,
         right: 0
     }
-    
+
     applyGravity() {
-       let gravityInterval = setInterval(() => {
+        let gravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY
                 this.speedY -= this.acceleration;
@@ -50,6 +50,10 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 30;
+        pepe_jump_sound.currentTime = 0;
+        pepe_jump_sound.play();
+
+        pepe_walking_sound.pause();
     }
 
     isColliding(mo) {
@@ -58,26 +62,36 @@ class MovableObject extends DrawableObject {
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&         // T -> B = Obere Kante von Pepe berührt untere Kante der Flasche
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&           // L -> R = Linke Kante von Pepe berührt rechte Kante der Flasche
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom            // B -> T = Untere Kante von Pepe berührt obere Kante der Flasche
-        );          
+        );
     }
 
     hit() {
-        this.energy -= 1;
-        if (this.energy < 0) {
-            this.energy = 0;
-        } else {
-            this.lastHit = new Date().getTime();
+        let now = new Date().getTime();
+        if (now - this.lastHit > 400) { 
+            this.energy -= 10;
+    
+            if (this.energy <= 0) {
+                this.energy = 0;
+            } else {
+                this.lastHit = now;
+                pepe_hurt_sound.currentTime = 0;
+                pepe_hurt_sound.play();
+            }
         }
     }
+    
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;     //differenz in milisek
         timepassed = timepassed / 1000;                         //differenz in sek
+
 
         return timepassed < 1;
     }
 
     isDead() {
         return this.energy == 0;
+        
+
     }
 }

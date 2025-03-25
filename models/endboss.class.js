@@ -68,7 +68,7 @@ class Endboss extends MovableObject {
 
 
     animate() {
-       let movementAnimation = setInterval(() => {
+        let movementAnimation = setInterval(() => {
             if (this.isDead) {
                 this.die();
             } else if (this.isMoving && !this.isAttacking && !this.isHurt && this.speed !== 0) {
@@ -90,7 +90,7 @@ class Endboss extends MovableObject {
         if (!this.isDead && !this.isHurt && !this.isMoving) {
             this.speed = 0.8;
             this.isMoving = true;
-    
+
             let movementInterval = setInterval(() => {
                 if (this.isMoving) {
                     this.moveLeft();
@@ -100,7 +100,7 @@ class Endboss extends MovableObject {
             gameIntervals.push(movementInterval);
         }
     }
-    
+
 
     attack() {
         if (!this.isAttacking && !this.isHurt && !this.isDead) {
@@ -114,26 +114,28 @@ class Endboss extends MovableObject {
     }
 
     hit() {
-        if(!this.isDead){
+        if (!this.isDead) {
             this.hitCount--;
             this.isHurt = true;
             let previousSpeed = this.speed;
             this.speed = 0;
             this.playAnimation(this.IMAGES_HURT);
-            
-    
+            endboss_hurt_sound.play();
+
+
             setTimeout(() => {
                 this.isHurt = false;
-                this.startWalking(); 
-                this.speed = previousSpeed; 
-                
+                this.startWalking();
+                this.speed = previousSpeed;
+
             }, 300);
-    
+
             if (this.hitCount <= 0) {
+                endboss_hurt_sound.pause();
                 this.die();
             }
         }
-       
+
     }
 
     die() {
@@ -141,11 +143,12 @@ class Endboss extends MovableObject {
             this.isDead = true;
             this.isMoving = false;
             this.playAnimation(this.IMAGES_DEAD);
+            endboss_death_sound.play();
 
             setTimeout(() => {
                 this.youWin();
             }, 1000);
-            
+
         }
     }
 
@@ -153,6 +156,18 @@ class Endboss extends MovableObject {
         let youWin = document.getElementById('youWin');
         youWin.classList.remove('dNone');
         isGameOver = true;
+        stopBackgroundMusic();
+        win_sound.play();
+
+
+        pepe_sleeping_sound.pause();
+        pepe_sleeping_sound.currentTime = 0;
+
+        pepe_hurt_sound.pause();
+        pepe_hurt_sound.currentTime = 0;
+
+        pepe_walking_sound.pause();
+        pepe_walking_sound.currentTime = 0;
     }
 
 }

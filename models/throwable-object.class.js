@@ -39,6 +39,8 @@ class ThrowableObject extends MovableObject {
                 this.x += 10;
                 this.speedY -= 1;
                 this.playAnimation(this.IMAGES_ROTATION_BOTTLE);
+                bottle_throw_sound.play();
+                bottle_throw_sound.currentTime = 0;
             }
 
             if (!this.isBottleAboveGround() && !this.explodes) {
@@ -59,6 +61,7 @@ class ThrowableObject extends MovableObject {
           this.speedY = 0;
        
         this.playAnimation(this.IMAGES_SPLASH_BOTTLE);
+        bottle_splash_sound.play();
     }
 
 

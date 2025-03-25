@@ -2,22 +2,29 @@ let canvas;
 let keyboard = new Keyboard();
 let world;
 let intro_music = new Audio('audio/audio_intro.mp3');
+intro_music.volume = 0.5;
 let background_music = new Audio('audio/audio_backgroundmusic.mp3');
+background_music.volume = 0.2;
 
 let chicken_sound = new Audio('audio/audio_chicken.mp3');
+chicken_sound.volume = 0.5;
 let chick_sound = new Audio('audio/audio_chick.mp3');
 let endboss_hurt_sound = new Audio('audio/audio_endbosshurt.mp3');
 let endboss_death_sound = new Audio('audio/audio_endbossdead.wav');
 
 let pepe_walking_sound = new Audio('audio/audio_running.mp3');
 let pepe_jump_sound = new Audio('audio/audio_pepejump.mp3');
+pepe_jump_sound.volume= 1;
 let pepe_hurt_sound = new Audio('audio/audio_pepehurt.mp3');
+pepe_hurt_sound.volume = 0.6;
 let pepe_sleeping_sound = new Audio('audio/audio_pepesleeps.mp3');
+pepe_sleeping_sound.volume = 0.1;
 
 let bottle_throw_sound = new Audio('audio/audio_throw.mp3');
 let bottle_splash_sound = new Audio('audio/audio_salsa-splash.mp3');
 let collect_bottle_sound = new Audio('audio/audio_bottle.mp3');
 let collect_coin_sound  = new Audio('audio/audio_collect-coin.mp3');
+collect_coin_sound.volume = 0.4;
 
 let gameover_sound = new Audio('audio/audio_gameover.mp3');
 let win_sound = new Audio('audio/audio_winning.mp3');
@@ -29,13 +36,14 @@ let isGameOver = false;
 
 
 
+
 // Audio & Music
 
 document.addEventListener('DOMContentLoaded', () => {
     const firstClickScreen = document.getElementById('firstClickScreen');
 
     firstClickScreen.addEventListener('click', () => {
-        startIntroMusic(); // deine Funktion zum Starten der Musik
+        startIntroMusic(); 
         firstClickScreen.classList.add('dNone');
         document.getElementById('buttonsMainMenu').classList.remove('dNone');
         document.getElementById('intro').classList.remove('dNone');
@@ -53,11 +61,20 @@ function stopIntroMusic(){
     intro_music.pause();
 }
 
+function startBackgroundMusic(){
+    background_music.play();
+}
+
+function stopBackgroundMusic(){
+    background_music.pause();
+}
+
 function init() {
     hideMainMenu();
     resetWorld();
     createLevel();
-    stopIntroMusic()
+    stopIntroMusic();
+    startBackgroundMusic();
     
     world = new World(canvas, keyboard);
 }
@@ -137,6 +154,10 @@ function hideGameOverOrWinScreen(){
 function pauseGame() {
     document.getElementById('resumeOverlay').classList.remove('dNone');
     isGamePaused = true;
+    stopBackgroundMusic();
+
+    pepe_sleeping_sound.pause();
+    pepe_sleeping_sound.currentTime = 0;
 }
 
 
@@ -144,6 +165,7 @@ function resumeGame() {
     document.getElementById('resumeOverlay').classList.add('dNone');
     isGamePaused = false;
     requestAnimationFrame(() => world.draw());
+    startBackgroundMusic();
 }
 
 
@@ -153,6 +175,7 @@ function resetGame() {
     hideGameOverOrWinScreen();
     resetWorld();
     createLevel();
+    startBackgroundMusic();
     world = new World(canvas, keyboard);
 }
 

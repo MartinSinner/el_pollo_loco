@@ -28,36 +28,6 @@ function generateBackground() {
     return backgroundObjects;
 }
 
-let level1 = new Level(
-    [
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chick(),
-        new Endboss()
-    ],
-    generateClouds(),
-    generateBackground(),
 
 
-    [
-        new Salsa(),
-        new Salsa(),
-        new Salsa(),
-        new Salsa(),
-        new Salsa(),
-        new Salsa()
-    ],
-
-    [
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin(),
-        new Coin()
-    ]
-);
 

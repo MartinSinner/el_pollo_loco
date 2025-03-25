@@ -72,6 +72,7 @@ class World {
     handleEnemyCollision(enemy, index) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
             this.character.jump();
+            chicken_sound.play();
             if (!(enemy instanceof Endboss)) this.removeEnemy(enemy, index);
 
         } else if (!this.character.isAboveGround()) {
@@ -145,7 +146,10 @@ class World {
         this.level.coin.splice(index, 1);
         this.coinbar.collectedCoins += 20;
         this.coinbar.setCollectedCoins(this.coinbar.collectedCoins);
-        if (this.coinbar.collectedCoins >= 2) this.activateEndboss();
+        if (this.coinbar.collectedCoins >= 2) {
+            this.activateEndboss();
+            collect_coin_sound.play();
+        }
     }
 
 
@@ -158,7 +162,10 @@ class World {
 
     checkSalsaCollisions() {
         this.level.salsa.forEach((salsa, index) => {
-            if (this.character.isColliding(salsa)) this.collectSalsa(index)
+            if (this.character.isColliding(salsa)) {
+                this.collectSalsa(index)
+                collect_bottle_sound.play();
+            } 
         });
     }
 

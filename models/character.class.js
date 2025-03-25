@@ -120,6 +120,8 @@ class Character extends MovableObject {
     }
 
     handleAnimations() {
+        if (isGamePaused || isGameOver) return;
+
         const kb = this.gameWorld.keyboard;
         if (!kb.RIGHT && !kb.LEFT) this.standingTimer += 0.1;
         else this.standingTimer = 0;
@@ -127,9 +129,20 @@ class Character extends MovableObject {
         if (this.isDead() && !this.isDeadAnimation) return this.handleDeath();
         if (this.isHurt()) this.playAnimation(this.IMAGES_HURT);
         else if (this.isAboveGround()) this.playAnimation(this.IMAGES_JUMPING);
-        else if (this.standingTimer >= 3) this.playAnimation(this.IMAGES_SLEEPING);
-        else if (!kb.RIGHT && !kb.LEFT) this.playAnimation(this.IMAGES_STANDING);
-        else this.playAnimation(this.IMAGES_WALKING);
+        else if (this.standingTimer >= 3 && !isGamePaused) {
+            this.playAnimation(this.IMAGES_SLEEPING);
+            pepe_sleeping_sound.play();
+
+        }
+
+        else if (!kb.RIGHT && !kb.LEFT) {
+            this.playAnimation(this.IMAGES_STANDING);
+            pepe_walking_sound.pause();
+        } else {
+            this.playAnimation(this.IMAGES_WALKING);
+            pepe_sleeping_sound.pause();
+            pepe_walking_sound.play();
+        }
     }
 
     handleDeath() {
@@ -142,6 +155,19 @@ class Character extends MovableObject {
         let gameOver = document.getElementById('gameOver');
         gameOver.classList.remove('dNone');
         isGameOver = true;
+        gameover_sound.play();
+        stopBackgroundMusic();
+        
+
+        pepe_sleeping_sound.pause();
+        pepe_sleeping_sound.currentTime = 0;
+        
+        pepe_hurt_sound.pause();
+        pepe_hurt_sound.currentTime = 0;
+
+        pepe_walking_sound.pause();
+        pepe_walking_sound.currentTime = 0;
+
     }
 
 }
