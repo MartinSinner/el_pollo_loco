@@ -144,6 +144,8 @@ h1 {
 canvas {
     border-radius: 10px;
     display: block;
+    width: 720px; 
+    height: 480px;
 }
 
 .gameOver {
@@ -269,4 +271,183 @@ canvas {
 
 .dNone {
     display: none;
+}
+
+.orientationMessage {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    font-size: 30px;
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    z-index: 20;
+    text-align: center;
+    font-family: 'Lobster', cursive;
+}
+
+.orientationMessage img {
+    width: 120px;
+}
+
+
+/* Querformat-Optimierung */
+@media screen and (orientation: landscape) and (max-width: 1000px) {
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+    
+
+    @media screen and (orientation: landscape) {
+        .firstClick {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .firstClickScreen p {
+            margin-top: 200px;
+
+        }
+    }
+
+    .intro {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .buttonsMainMenu button {
+        padding: 0 10px !important;
+    }
+
+    .buttonsMainMenu button p {
+        font-size: 22px;
+    }
+
+
+    #howToPlayOverlay,
+    #impressumOverlay {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .infoContent {
+        width: 90%;
+        max-width: 600px;
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .infoContent h2 {
+        font-size: 28px;
+    }
+
+    .infoContent ul li {
+        font-size: 16px;
+    }
+
+    .infoContent button {
+        font-size: 20px;
+    }
+    
+    h1 {
+        margin-block-start: 0;
+        margin-block-end: 0;
+        font-size: 30px;
+    }
+
+    .gameContainer {
+        max-width: 70vw;
+        max-height: 70vh;
+        height: auto;
+        aspect-ratio: 3 / 2;
+        position: relative;
+    }
+
+    canvas,
+    .resumeOverlay,
+    .gameOver,
+    .youWin {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+    }
+
+    
+
+    .pauseOverlay {
+        top: 5px;
+        right: 10px;
+        gap: 10px;
+    }
+
+    .pauseOverlay img {
+        height: 40px;
+    }
+
+    .volumeIcon {
+        height: 30px !important;
+    }
+
+    
+
+    .resumeOverlay img {
+        height: 100px;
+        margin-top: -10px;
+    }
+
+    .resumeOverlay p {
+        font-size: 32px;
+        margin-bottom: 60px;
+    }
+
+
+    .button {
+        font-size: 18px;
+        padding: 6px 16px;
+    }
+
+    .mobileButtonsContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 210px;
+        margin-top: 8px;
+    }
+
+    .navButtons {
+        display: flex;
+        gap: 24px;
+    }
+
+    .navButtons img {
+        width: 45px;
+    }
+
+    .actionButtons {
+        gap: 24px;
+    }
+
+    .upButton {
+        width: 45px !important;
+        margin-bottom: 6px;
+    }
+
+    .salsaBottle{
+        width: 60px !important;
+    }
+
+    
+
 }

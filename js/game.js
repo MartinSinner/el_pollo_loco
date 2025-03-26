@@ -212,6 +212,26 @@ function closeImpressum() {
 }
 
 
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', checkOrientation);
+window.addEventListener('load', checkOrientation);
+
+function checkOrientation() {
+    const isPortrait = window.innerHeight > window.innerWidth;
+    const isMobile = window.innerWidth < 800;
+    const orientationMessage = document.getElementById('orientationMessage');
+
+    if (isMobile && isPortrait) {
+        orientationMessage.style.display = 'flex';
+    } else {
+        orientationMessage.style.display = 'none';
+    }
+}
+
+
+
+
+
 
 
 
