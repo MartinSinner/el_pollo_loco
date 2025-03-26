@@ -220,11 +220,14 @@ function checkOrientation() {
     const isPortrait = window.innerHeight > window.innerWidth;
     const isMobile = window.innerWidth < 800;
     const orientationMessage = document.getElementById('orientationMessage');
+    const mobileButtons = document.getElementById('mobileButtons');
 
     if (isMobile && isPortrait) {
         orientationMessage.style.display = 'flex';
+        mobileButtons.classList.remove('dNone');
     } else {
         orientationMessage.style.display = 'none';
+        mobileButtons.classList.add('dNone');
     }
 }
 

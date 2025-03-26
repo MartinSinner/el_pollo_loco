@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
 body {
     display: flex;
     align-items: center;
@@ -9,6 +15,8 @@ body {
     height: 100vh;
     margin: 0;
     position: relative;
+    overflow: hidden;
+    touch-action: none;
 }
 
 .firstClickScreen {
@@ -144,7 +152,7 @@ h1 {
 canvas {
     border-radius: 10px;
     display: block;
-    width: 720px; 
+    width: 720px;
     height: 480px;
 }
 
@@ -294,16 +302,16 @@ canvas {
 }
 
 
-/* Querformat-Optimierung */
 @media screen and (orientation: landscape) and (max-width: 1000px) {
 
     html,
     body {
-        height: 100%;
-        width: 100%;
+        width: 100vw;
+        height: 100vh;
         overflow: hidden;
+        margin: 0;
+        padding: 0;
     }
-    
 
     @media screen and (orientation: landscape) {
         .firstClick {
@@ -332,7 +340,6 @@ canvas {
         font-size: 22px;
     }
 
-
     #howToPlayOverlay,
     #impressumOverlay {
         flex-direction: column;
@@ -358,33 +365,28 @@ canvas {
     .infoContent button {
         font-size: 20px;
     }
-    
+
     h1 {
-        margin-block-start: 0;
-        margin-block-end: 0;
-        font-size: 30px;
+        display: none;
     }
 
     .gameContainer {
-        max-width: 70vw;
-        max-height: 70vh;
-        height: auto;
-        aspect-ratio: 3 / 2;
+        width: 100vw;
+        height: 100vh;
         position: relative;
+        overflow: hidden;
     }
 
     canvas,
     .resumeOverlay,
-    .gameOver,
-    .youWin {
+    .youWin,
+    .gameOver {
+        width: 100vw;
+        height: 101vh;
         position: absolute;
         inset: 0;
-        width: 100%;
-        height: 100%;
-        border-radius: 10px;
+        border-radius: 0;
     }
-
-    
 
     .pauseOverlay {
         top: 5px;
@@ -400,8 +402,6 @@ canvas {
         height: 30px !important;
     }
 
-    
-
     .resumeOverlay img {
         height: 100px;
         margin-top: -10px;
@@ -412,42 +412,79 @@ canvas {
         margin-bottom: 60px;
     }
 
-
     .button {
-        font-size: 18px;
-        padding: 6px 16px;
+        font-size: 20px;
+        padding: 16px 24px;
     }
 
     .mobileButtonsContainer {
+        position: absolute;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 210px;
-        margin-top: 8px;
+        gap: 600px;
+        bottom: 1px;
     }
 
     .navButtons {
         display: flex;
-        gap: 24px;
+        gap: 8px;
     }
 
     .navButtons img {
-        width: 45px;
+        width: 40px;
+        height: 40px;
     }
 
     .actionButtons {
         gap: 24px;
     }
 
+    .salsaButton {
+        display: flex;
+    }
+
     .upButton {
-        width: 45px !important;
-        margin-bottom: 6px;
+        width: 40px !important;
+        margin-bottom: 8px;
     }
 
-    .salsaBottle{
-        width: 60px !important;
+    .salsaBottle {
+        position: absolute;
+        width: 57px !important;
+        bottom: 6px;
+        z-index: 3;
+        right: 75px;
     }
 
-    
+    canvas {
+        z-index: 1;
+    }
 
+    .mobileButtonsContainer {
+        z-index: 2;
+    }
+
+    .pauseOverlay {
+        z-index: 3;
+    }
+
+    .resumeOverlay,
+    .youWin,
+    .gameOver {
+        z-index: 4;
+    }
+}
+
+
+@media screen and (orientation: landscape) and (max-width: 1000px) {
+    .mobileButtonsContainer {
+        gap: clamp(300px, 75vw, 650px);
+    }
+
+    .salsaBottle {
+        right: clamp(48px, 4vw, 72px);
+    }
+
+    .navButtons {
+        gap: clamp(8px, 3vw, 24px);
+    }
 }
