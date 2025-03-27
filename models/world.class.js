@@ -111,9 +111,12 @@ class World {
 
 
     bottleHitsEnemy(bottle, enemy) {
-        return bottle.x + bottle.width > enemy.x + enemy.width * 0.2 &&
-            bottle.y + bottle.height > enemy.y + enemy.height * 0.3;
+        return bottle.x < enemy.x + enemy.width &&
+               bottle.x + bottle.width > enemy.x &&
+               bottle.y < enemy.y + enemy.height &&
+               bottle.y + bottle.height > enemy.y;
     }
+    
 
 
     handleBottleHits(bottle, bottleIndex, enemy, enemyIndex) {
@@ -246,7 +249,7 @@ class World {
     addToMap(mo) {                                      //mo = MovableObject
         if (mo.otherDirection) this.flipImage(mo);
         mo.draw(this.ctx);
-        mo.drawBorder(this.ctx);
+        // mo.drawBorder(this.ctx);
         if (mo.otherDirection) this.flipImageBack(mo);
     }
 
