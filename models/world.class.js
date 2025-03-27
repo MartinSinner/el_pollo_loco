@@ -73,7 +73,11 @@ class World {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
             this.character.jump();
             if (isMuted == false) {
-                chicken_sound.play();
+                if(enemy instanceof Chicken){
+                    chicken_sound.play();
+                } else if (enemy instanceof Chick) {
+                    chick_sound.play();
+                }
             }
             if (!(enemy instanceof Endboss)) this.removeEnemy(enemy, index);
 
@@ -117,7 +121,6 @@ class World {
                bottle.y + bottle.height > enemy.y;
     }
     
-
 
     handleBottleHits(bottle, bottleIndex, enemy, enemyIndex) {
         bottle.splash();

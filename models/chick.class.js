@@ -1,6 +1,6 @@
 class Chick extends MovableObject {
-    y = 370;
-    height = 60;
+    y = 360;
+    height = 80;
     width = 70;
     isDead = false;
 
@@ -18,8 +18,8 @@ class Chick extends MovableObject {
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
 
-        this.x = 600 + Math.random() * 500;
-        this.speed = 0.15 + Math.random() * 0.25;
+        this.x = 1200 + Math.random() * 1500;
+        this.speed = 0.5 + Math.random() * 0.25;
 
         this.animate();
     }

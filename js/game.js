@@ -10,6 +10,7 @@ let click_sound = new Audio('audio/click.mp3');
 let chicken_sound = new Audio('audio/audio_chicken.mp3');
 chicken_sound.volume = 0.5;
 let chick_sound = new Audio('audio/audio_chick.mp3');
+chick_sound.volume = 0.5;
 let endboss_hurt_sound = new Audio('audio/audio_endbosshurt.mp3');
 let endboss_death_sound = new Audio('audio/audio_endbossdead.wav');
 
@@ -112,6 +113,11 @@ function createLevel() {
             new Chicken(),
             new Chicken(),
             new Chicken(),
+            new Chicken(),
+            new Chicken(),
+            new Chick(),
+            new Chick(),
+            new Chick(),
             new Chick(),
             new Endboss()
         ],
