@@ -39,8 +39,11 @@ class ThrowableObject extends MovableObject {
                 this.x += 10;
                 this.speedY -= 1;
                 this.playAnimation(this.IMAGES_ROTATION_BOTTLE);
-                bottle_throw_sound.currentTime = 0;
-                bottle_throw_sound.play();
+                if(isMuted == false){
+                    bottle_throw_sound.currentTime = 0;
+                    bottle_throw_sound.play();
+                }
+                
                 
             }
 
@@ -62,7 +65,9 @@ class ThrowableObject extends MovableObject {
           this.speedY = 0;
        
         this.playAnimation(this.IMAGES_SPLASH_BOTTLE);
-        bottle_splash_sound.play();
+        if (isMuted == false) {
+            bottle_splash_sound.play();
+        }
     }
 
 

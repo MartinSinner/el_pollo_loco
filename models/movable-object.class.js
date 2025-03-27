@@ -50,10 +50,13 @@ class MovableObject extends DrawableObject {
 
     jump() {
         this.speedY = 30;
-        pepe_jump_sound.currentTime = 0;
-        pepe_jump_sound.play();
-
-        pepe_walking_sound.pause();
+        if (isMuted == false) {
+            pepe_jump_sound.currentTime = 0;
+            pepe_jump_sound.play();
+    
+            pepe_walking_sound.pause();
+        }
+       
     }
 
     isColliding(mo) {
@@ -74,8 +77,11 @@ class MovableObject extends DrawableObject {
                 this.energy = 0;
             } else {
                 this.lastHit = now;
-                pepe_hurt_sound.currentTime = 0;
-                pepe_hurt_sound.play();
+                if (isMuted == false) {
+                    pepe_hurt_sound.currentTime = 0;
+                    pepe_hurt_sound.play();
+                }
+               
             }
         }
     }

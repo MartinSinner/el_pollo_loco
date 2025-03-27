@@ -15,7 +15,7 @@ let endboss_death_sound = new Audio('audio/audio_endbossdead.wav');
 
 let pepe_walking_sound = new Audio('audio/audio_running.mp3');
 let pepe_jump_sound = new Audio('audio/audio_pepejump.mp3');
-pepe_jump_sound.volume= 1;
+pepe_jump_sound.volume = 1;
 let pepe_hurt_sound = new Audio('audio/audio_pepehurt.mp3');
 pepe_hurt_sound.volume = 0.6;
 let pepe_sleeping_sound = new Audio('audio/audio_pepesleeps.mp3');
@@ -24,7 +24,7 @@ pepe_sleeping_sound.volume = 0.05;
 let bottle_throw_sound = new Audio('audio/audio_throw.mp3');
 let bottle_splash_sound = new Audio('audio/audio_salsa-splash.mp3');
 let collect_bottle_sound = new Audio('audio/audio_bottle.mp3');
-let collect_coin_sound  = new Audio('audio/audio_collect-coin.mp3');
+let collect_coin_sound = new Audio('audio/audio_collect-coin.mp3');
 collect_coin_sound.volume = 0.4;
 
 let gameover_sound = new Audio('audio/audio_gameover.mp3');
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstClickScreen = document.getElementById('firstClickScreen');
 
     firstClickScreen.addEventListener('click', () => {
-        startIntroMusic(); 
+        startIntroMusic();
         firstClickScreen.classList.add('dNone');
         document.getElementById('buttonsMainMenu').classList.remove('dNone');
         document.getElementById('intro').classList.remove('dNone');
@@ -57,25 +57,25 @@ document.querySelectorAll('.button').forEach(button => {
         sound.currentTime = 0;
         sound.play();
     });
-  
+
 });
 
 
-function startIntroMusic(){
+function startIntroMusic() {
     if (!isMuted) {
         intro_music.play();
     }
 }
 
-function stopIntroMusic(){
+function stopIntroMusic() {
     intro_music.pause();
 }
 
-function startBackgroundMusic(){
+function startBackgroundMusic() {
     background_music.play();
 }
 
-function stopBackgroundMusic(){
+function stopBackgroundMusic() {
     background_music.pause();
 }
 
@@ -84,8 +84,9 @@ function init() {
     resetWorld();
     createLevel();
     stopIntroMusic();
-    startBackgroundMusic();
-    
+    if (isMuted == false) {
+        startBackgroundMusic();
+    }
     world = new World(canvas, keyboard);
 }
 
@@ -154,7 +155,7 @@ function showMainMenu() {
 }
 
 
-function hideGameOverOrWinScreen(){
+function hideGameOverOrWinScreen() {
     document.getElementById('gameOver').classList.add('dNone');
     document.getElementById('youWin').classList.add('dNone');
     document.getElementById('resumeOverlay').classList.add('dNone');
@@ -164,10 +165,13 @@ function hideGameOverOrWinScreen(){
 function pauseGame() {
     document.getElementById('resumeOverlay').classList.remove('dNone');
     isGamePaused = true;
-    stopBackgroundMusic();
+    if (isMuted == false) {
+        stopBackgroundMusic();
 
-    pepe_sleeping_sound.pause();
-    pepe_sleeping_sound.currentTime = 0;
+        pepe_sleeping_sound.pause();
+        pepe_sleeping_sound.currentTime = 0;
+    }
+
 }
 
 
@@ -175,7 +179,10 @@ function resumeGame() {
     document.getElementById('resumeOverlay').classList.add('dNone');
     isGamePaused = false;
     requestAnimationFrame(() => world.draw());
-    startBackgroundMusic();
+    if (isMuted == false) {
+        startBackgroundMusic();
+    }
+
 }
 
 
@@ -185,7 +192,9 @@ function resetGame() {
     hideGameOverOrWinScreen();
     resetWorld();
     createLevel();
-    startBackgroundMusic();
+    if (isMuted == false) {
+        startBackgroundMusic();
+    }
     world = new World(canvas, keyboard);
 }
 
@@ -229,7 +238,54 @@ function checkOrientation() {
         orientationMessage.style.display = 'none';
         mobileButtons.classList.add('dNone');
     }
+
+    updadteSound();
 }
+
+function toggleSound() {
+    let sound = document.getElementById('sound');
+    if (isMuted === true) {
+        soundOn();
+        sound.src = "img/background/volume.png";
+    } else {
+        soundOff();
+        sound.src = "img/background/mute.png";
+    }
+}
+
+function updadteSound() {
+    const soundIcon = document.getElementById('sound');
+    soundIcon.src = isMuted ? "img/background/mute.png" : "img/background/volume.png";
+}
+
+function soundOn() {
+    isMuted = false;
+    localStorage.setItem('isMuted', isMuted);
+    background_music.play();
+}
+
+function soundOff() {
+    isMuted = true;
+    localStorage.setItem('isMuted', isMuted.toString());
+    background_music.pause();
+    chicken_sound.pause();
+    click_sound.pause();
+    endboss_hurt_sound.pause();
+    endboss_death_sound.pause();
+    pepe_walking_sound.pause();
+    pepe_jump_sound.pause();
+    pepe_hurt_sound.pause();
+    pepe_sleeping_sound.pause();
+    bottle_throw_sound.pause();
+    bottle_splash_sound.pause();
+    collect_bottle_sound.pause();
+    collect_coin_sound.pause();
+    gameover_sound.pause();
+    win_sound.pause();
+}
+
+
+
 
 
 

@@ -231,18 +231,15 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 10px;
+    top: 15px;
+    gap: 15px;
     right: 20px;
 
 }
 
 .pauseOverlay img {
-    height: 55px;
+    height: 30px;
     cursor: pointer;
-}
-
-.volumeIcon {
-    height: 35px !important;
 }
 
 .resumeOverlay {
@@ -389,13 +386,13 @@ canvas {
     }
 
     .pauseOverlay {
-        top: 5px;
+        top: 10px;
         right: 10px;
         gap: 10px;
     }
 
     .pauseOverlay img {
-        height: 40px;
+        height: 25px;
     }
 
     .volumeIcon {

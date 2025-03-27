@@ -92,7 +92,7 @@ class Endboss extends MovableObject {
             this.isMoving = true;
 
             let movementInterval = setInterval(() => {
-                if(isGamePaused || isGameOver) return;
+                if (isGamePaused || isGameOver) return;
                 if (this.isMoving) {
                     this.moveLeft();
                 }
@@ -121,8 +121,9 @@ class Endboss extends MovableObject {
             let previousSpeed = this.speed;
             this.speed = 0;
             this.playAnimation(this.IMAGES_HURT);
-            endboss_hurt_sound.play();
-
+            if (isMuted == false) {
+                endboss_hurt_sound.play();
+            }
 
             setTimeout(() => {
                 this.isHurt = false;
@@ -132,7 +133,9 @@ class Endboss extends MovableObject {
             }, 300);
 
             if (this.hitCount <= 0) {
-                endboss_hurt_sound.pause();
+                if (isMuted == false) {
+                    endboss_hurt_sound.pause();
+                }
                 this.die();
             }
         }
@@ -144,7 +147,10 @@ class Endboss extends MovableObject {
             this.isDead = true;
             this.isMoving = false;
             this.playAnimation(this.IMAGES_DEAD);
-            endboss_death_sound.play();
+            if (isMuted == false) {
+                endboss_death_sound.play();
+            }
+
 
             setTimeout(() => {
                 this.youWin();
@@ -157,18 +163,22 @@ class Endboss extends MovableObject {
         let youWin = document.getElementById('youWin');
         youWin.classList.remove('dNone');
         isGameOver = true;
-        stopBackgroundMusic();
-        win_sound.play();
+        if (isMuted == false) {
 
 
-        pepe_sleeping_sound.pause();
-        pepe_sleeping_sound.currentTime = 0;
+            stopBackgroundMusic();
+            win_sound.play();
 
-        pepe_hurt_sound.pause();
-        pepe_hurt_sound.currentTime = 0;
 
-        pepe_walking_sound.pause();
-        pepe_walking_sound.currentTime = 0;
+            pepe_sleeping_sound.pause();
+            pepe_sleeping_sound.currentTime = 0;
+
+            pepe_hurt_sound.pause();
+            pepe_hurt_sound.currentTime = 0;
+
+            pepe_walking_sound.pause();
+            pepe_walking_sound.currentTime = 0;
+        }
     }
 
 }

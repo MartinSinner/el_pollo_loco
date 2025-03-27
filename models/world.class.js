@@ -72,7 +72,9 @@ class World {
     handleEnemyCollision(enemy, index) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
             this.character.jump();
-            chicken_sound.play();
+            if (isMuted == false) {
+                chicken_sound.play();
+            }
             if (!(enemy instanceof Endboss)) this.removeEnemy(enemy, index);
 
         } else if (!this.character.isAboveGround()) {
@@ -148,7 +150,10 @@ class World {
         this.coinbar.setCollectedCoins(this.coinbar.collectedCoins);
         if (this.coinbar.collectedCoins >= 2) {
             this.activateEndboss();
-            collect_coin_sound.play();
+            if (isMuted == false) {
+                collect_coin_sound.play(); 
+            }
+            
         }
     }
 
@@ -164,7 +169,10 @@ class World {
         this.level.salsa.forEach((salsa, index) => {
             if (this.character.isColliding(salsa)) {
                 this.collectSalsa(index)
-                collect_bottle_sound.play();
+                if (isMuted == false) {
+                    collect_bottle_sound.play();
+                }
+                
             } 
         });
     }

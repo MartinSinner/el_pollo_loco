@@ -142,18 +142,25 @@ class Character extends MovableObject {
 
     sleeping() {
         this.playAnimation(this.IMAGES_SLEEPING);
-        pepe_sleeping_sound.play();
+        if (isMuted == false) {
+            pepe_sleeping_sound.play();
+        }
     }
 
     standing() {
         this.playAnimation(this.IMAGES_STANDING);
-        pepe_walking_sound.pause();
+        if (isMuted == false) {
+            pepe_walking_sound.pause();
+        }
+
     }
 
     walking() {
         this.playAnimation(this.IMAGES_WALKING);
-        pepe_sleeping_sound.pause();
-        pepe_walking_sound.play();
+        if (isMuted == false) {
+            pepe_sleeping_sound.pause();
+            pepe_walking_sound.play();
+        }
     }
 
     handleDeath() {
@@ -168,17 +175,20 @@ class Character extends MovableObject {
         let gameOver = document.getElementById('gameOver');
         gameOver.classList.remove('dNone');
         isGameOver = true;
-        gameover_sound.play();
-        stopBackgroundMusic();
+        if (isMuted == false) {
+            gameover_sound.play();
 
-        pepe_sleeping_sound.pause();
-        pepe_sleeping_sound.currentTime = 0;
+            stopBackgroundMusic();
 
-        pepe_hurt_sound.pause();
-        pepe_hurt_sound.currentTime = 0;
+            pepe_sleeping_sound.pause();
+            pepe_sleeping_sound.currentTime = 0;
 
-        pepe_walking_sound.pause();
-        pepe_walking_sound.currentTime = 0;
+            pepe_hurt_sound.pause();
+            pepe_hurt_sound.currentTime = 0;
+
+            pepe_walking_sound.pause();
+            pepe_walking_sound.currentTime = 0;
+        }
 
     }
 
