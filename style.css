@@ -12,7 +12,7 @@ body {
     flex-direction: column;
     background-image: url("img/background/background.png");
     background-size: cover;
-    height: 100vh;
+    height: 100dvh;
     margin: 0;
     position: relative;
     overflow: hidden;
@@ -304,7 +304,7 @@ canvas {
     html,
     body {
         width: 100vw;
-        height: 100vh;
+        height: 100dvh;
         overflow: hidden;
         margin: 0;
         padding: 0;
@@ -379,7 +379,7 @@ canvas {
     .youWin,
     .gameOver {
         width: 100vw;
-        height: 101vh;
+        height: 100dvh;
         position: absolute;
         inset: 0;
         border-radius: 0;
