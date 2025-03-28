@@ -18,6 +18,10 @@ class MovableObject extends DrawableObject {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY
                 this.speedY -= this.acceleration;
+                if (this.y > this.jumpStartY) {
+                    this.y = this.jumpStartY;
+                    this.speedY = 0;
+                }
             }
         }, 1000 / 25);
 
@@ -49,14 +53,17 @@ class MovableObject extends DrawableObject {
     }
 
     jump() {
+        if (!this.isAboveGround()) {
+            this.jumpStartY = this.y;
+        }
+
         this.speedY = 30;
+
         if (isMuted == false) {
             pepe_jump_sound.currentTime = 0;
             pepe_jump_sound.play();
-    
             pepe_walking_sound.pause();
         }
-       
     }
 
     isColliding(mo) {
@@ -70,9 +77,9 @@ class MovableObject extends DrawableObject {
 
     hit() {
         let now = new Date().getTime();
-        if (now - this.lastHit > 400) { 
+        if (now - this.lastHit > 400) {
             this.energy -= 10;
-    
+
             if (this.energy <= 0) {
                 this.energy = 0;
             } else {
@@ -81,11 +88,11 @@ class MovableObject extends DrawableObject {
                     pepe_hurt_sound.currentTime = 0;
                     pepe_hurt_sound.play();
                 }
-               
+
             }
         }
     }
-    
+
 
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;     //differenz in milisek
@@ -97,7 +104,7 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         return this.energy == 0;
-        
+
 
     }
 }
