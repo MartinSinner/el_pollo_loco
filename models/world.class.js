@@ -77,8 +77,11 @@ class World {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
             this.handleStompEnemy(enemy, index);
         } else if (!this.character.isAboveGround()) {
-            this.character.hit();
+            let damage = (enemy instanceof Endboss) ? 25 : 10;
+
+            this.character.hit(damage);
             this.healthbar.setPercentage(this.character.energy);
+
             if (enemy instanceof Endboss) this.knockbackBoss(enemy);
         }
     }
@@ -90,7 +93,7 @@ class World {
             if (isMuted == false) this.playEnemySound(enemy);
             this.removeEnemy(enemy, index);
         } else {
-            this.character.hit();
+            this.character.hit(25);
             this.healthbar.setPercentage(this.character.energy);
             this.knockbackBoss();
             

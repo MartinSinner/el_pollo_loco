@@ -75,11 +75,10 @@ class MovableObject extends DrawableObject {
         );
     }
 
-    hit() {
+    hit(damage = 10) {
         let now = new Date().getTime();
         if (now - this.lastHit > 400) {
-            this.energy -= 10;
-
+            this.energy -= damage;
             if (this.energy <= 0) {
                 this.energy = 0;
             } else {
@@ -88,7 +87,6 @@ class MovableObject extends DrawableObject {
                     pepe_hurt_sound.currentTime = 0;
                     pepe_hurt_sound.play();
                 }
-
             }
         }
     }
