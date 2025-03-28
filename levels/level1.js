@@ -1,3 +1,8 @@
+/**
+ * Creates many clouds with random distance between them.
+ * 
+ * @returns {Cloud[]} An array with cloud objects.
+ */
 function generateClouds() {
     let clouds = [];
     let x = -500;
@@ -12,6 +17,12 @@ function generateClouds() {
     return clouds;
 }
 
+
+/**
+ * Creates a long background by repeating air and ground layers.
+ * 
+ * @returns {BackgroundObject[]} An array with background images.
+ */
 function generateBackground() {
     let backgroundObjects = [];
     for (let i = 0; i < 1000; i++) {

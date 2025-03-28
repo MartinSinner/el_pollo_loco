@@ -1,3 +1,7 @@
+/**
+ * This class is for all moving objects in the game (like the character or enemies).
+ * It extends DrawableObject and adds movement, jumping, gravity and collision logic.
+ */
 class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
@@ -13,6 +17,10 @@ class MovableObject extends DrawableObject {
         right: 0
     }
 
+
+    /**
+     * Adds gravity to the object so it falls down or jumps.
+     */
     applyGravity() {
         let gravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -28,6 +36,11 @@ class MovableObject extends DrawableObject {
         gameIntervals.push(gravityInterval);
     }
 
+
+    /**
+     * Checks if the object is above the ground.
+     * @returns {boolean}
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return true;
@@ -36,6 +49,11 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
+    /**
+     * Plays animation frames from a given image array.
+     * @param {Array} images - Array of image paths.
+     */
     playAnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -43,15 +61,21 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
+    /** Moves the object to the left */
     moveLeft() {
         this.x -= this.speed;
     }
 
+
+    /** Moves the object to the right */
     moveRight() {
         this.x += this.speed;
         this.otherDirection = false;
     }
 
+
+    /** Makes the object jump */
     jump() {
         if (!this.isAboveGround()) {
             this.jumpStartY = this.y;
@@ -66,15 +90,26 @@ class MovableObject extends DrawableObject {
         }
     }
 
+
+     /**
+     * Checks if this object touches another object.
+     * @param {MovableObject} mo - Another movable object.
+     * @returns {boolean}
+     */
     isColliding(mo) {
         return (
-            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&           // R -> L = Rechte Kante von Pepe berührt linke Kante der Flasche
-            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&         // T -> B = Obere Kante von Pepe berührt untere Kante der Flasche
-            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&           // L -> R = Linke Kante von Pepe berührt rechte Kante der Flasche
-            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom            // B -> T = Untere Kante von Pepe berührt obere Kante der Flasche
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&           
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&         
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&           
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom            
         );
     }
 
+
+    /**
+     * Reduces the object's energy (takes damage).
+     * @param {number} [damage=10] - Amount of energy to subtract.
+     */
     hit(damage = 10) {
         let now = new Date().getTime();
         if (now - this.lastHit > 400) {
@@ -92,17 +127,22 @@ class MovableObject extends DrawableObject {
     }
 
 
+    /**
+     * Checks if the object was recently hit.
+     * @returns {boolean}
+     */
     isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit;     //differenz in milisek
-        timepassed = timepassed / 1000;                         //differenz in sek
-
-
+        let timepassed = new Date().getTime() - this.lastHit;     
+        timepassed = timepassed / 1000;                         
         return timepassed < 1;
     }
 
+
+    /**
+     * Checks if the object has no more energy.
+     * @returns {boolean}
+     */
     isDead() {
         return this.energy == 0;
-
-
     }
 }

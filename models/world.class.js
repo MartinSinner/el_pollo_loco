@@ -1,3 +1,7 @@
+/**
+ * The World class represents the entire game world.
+ * It handles drawing, collisions, movement, throwing bottles, collecting items, and enemy interactions.
+ */
 class World {
     character = new Character();
     level = level1;
@@ -14,6 +18,11 @@ class World {
     animationFrameId;
 
 
+    /**
+     * Creates a new World.
+     * @param {HTMLCanvasElement} canvas - The canvas where the game is drawn.
+     * @param {Keyboard} keyboard - The keyboard input.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -24,16 +33,21 @@ class World {
     }
 
 
+    /**
+     * Starts the main game loop.
+     */
     run() {
         let runInterval = setInterval(() => {
             if (isGamePaused) return;
             this.checkAll()
         }, 20);
-
         gameIntervals.push(runInterval);
     }
 
 
+    /**
+     * Calls all collision and interaction checks.
+     */
     checkAll() {
         this.checkCollisions();
         this.checkCoinCollisions();
@@ -43,6 +57,9 @@ class World {
     }
 
 
+    /**
+     * Checks if the player is allowed to throw and creates a throwable bottle.
+     */
     checkThrowObjects() {
         if (this.keyboard.D && this.salsabar.collectedSalsa > 0 && this.canThrow) {
             this.canThrow = false;
@@ -54,17 +71,17 @@ class World {
             );
             
             this.throwableObjects.push(bottle);
-
-
             this.salsabar.collectedSalsa -= 20;
             this.salsabar.setCollectedSalsa(this.salsabar.collectedSalsa);
-
 
             setTimeout(() => this.canThrow = true, 1000);
         }
     }
 
 
+    /**
+     * Checks collision between character and enemies.
+     */
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) this.handleEnemyCollision(enemy, index);
@@ -73,11 +90,16 @@ class World {
     }
 
 
+    /**
+     * Handles collisions with enemies (jumping on or being hit).
+     * @param {MovableObject} enemy - The enemy collided with.
+     * @param {number} index - The index of the enemy.
+     */
     handleEnemyCollision(enemy, index) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
             this.handleStompEnemy(enemy, index);
         } else if (!this.character.isAboveGround()) {
-            let damage = (enemy instanceof Endboss) ? 25 : 10;
+            let damage = (enemy instanceof Endboss) ? 20 : 10;
 
             this.character.hit(damage);
             this.healthbar.setPercentage(this.character.energy);
@@ -87,26 +109,25 @@ class World {
     }
 
 
+    /**
+     * Handles enemy being stomped on by the character.
+     */
     handleStompEnemy(enemy, index) {
         if (!(enemy instanceof Endboss)) {
             this.character.jump();
             if (isMuted == false) this.playEnemySound(enemy);
             this.removeEnemy(enemy, index);
         } else {
-            this.character.hit(25);
+            this.character.hit(20);
             this.healthbar.setPercentage(this.character.energy);
-            this.knockbackBoss();
-            
+            this.knockbackBoss(enemy); 
         }
     }
 
 
-    knockbackBoss(enemy){
-        this.character.x -= 20; 
-        enemy.attack();
-    }
-
-
+    /**
+     * Plays sound for chicken or chick enemy.
+     */
     playEnemySound(enemy){
         if (enemy instanceof Chicken) {
             chicken_sound.play();
@@ -116,6 +137,18 @@ class World {
     }
 
 
+    /**
+     * Pushes the Pepe back when hit by the endboss.
+     */
+    knockbackBoss(enemy){
+        this.character.x -= 20; 
+        enemy.attack();
+    }
+
+
+    /**
+     * Shows the boss health bar when the character is close.
+     */
     showBossbarIfNear(enemy) {
         let distanceToPepe = enemy.x - this.character.x;
         if (distanceToPepe < 500) {
@@ -124,12 +157,18 @@ class World {
     }
 
 
+    /**
+     * Removes the enemy from the level after a delay.
+     */
     removeEnemy(enemy, index) {
         enemy.die();
         setTimeout(() => this.level.enemies.splice(index, 1), 300);
     }
 
 
+    /**
+     * Checks if a thrown bottle hits any enemy.
+     */
     checkSalsaCollisionEnemy() {
         this.throwableObjects.forEach((bottle, bottleIndex) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
@@ -137,10 +176,13 @@ class World {
                     this.handleBottleHits(bottle, bottleIndex, enemy, enemyIndex);
                 }
             });
-        })
+        });
     }
 
 
+    /**
+     * Checks collision between bottle and enemy.
+     */
     bottleHitsEnemy(bottle, enemy) {
         return bottle.x < enemy.x + enemy.width &&
                bottle.x + bottle.width > enemy.x &&
@@ -149,6 +191,9 @@ class World {
     }
     
 
+    /**
+     * Handles what happens when a bottle hits an enemy.
+     */
     handleBottleHits(bottle, bottleIndex, enemy, enemyIndex) {
         bottle.splash();
         bottle.speedY = 0;
@@ -169,7 +214,9 @@ class World {
     }
 
 
-
+    /**
+     * Checks if the character collects a coin.
+     */
     checkCoinCollisions() {
         this.level.coin.forEach((coin, index) => {
             if (this.character.isColliding(coin)) this.collectCoin(index);
@@ -177,6 +224,9 @@ class World {
     }
 
 
+    /**
+     * Collects coin and increases counter.
+     */
     collectCoin(index) {
         this.level.coin.splice(index, 1);
         this.coinbar.collectedCoins += 20;
@@ -185,12 +235,14 @@ class World {
             this.activateEndboss();
             if (isMuted == false) {
                 collect_coin_sound.play(); 
-            }
-            
+            }    
         }
     }
 
 
+    /**
+     * Starts the endboss movement.
+     */
     activateEndboss() {
         this.level.enemies.forEach(enemy => {
             if (enemy instanceof Endboss) enemy.startWalking();
@@ -198,19 +250,24 @@ class World {
     }
 
 
+    /**
+     * Checks if the character collects a salsa bottle.
+     */
     checkSalsaCollisions() {
         this.level.salsa.forEach((salsa, index) => {
             if (this.character.isColliding(salsa)) {
                 this.collectSalsa(index)
                 if (isMuted == false) {
                     collect_bottle_sound.play();
-                }
-                
+                } 
             } 
         });
     }
 
 
+    /**
+     * Collects salsa and updates the bar.
+     */
     collectSalsa(index) {
         this.level.salsa.splice(index, 1);
         this.salsabar.collectedSalsa += 20;
@@ -218,11 +275,17 @@ class World {
     }
 
 
+    /**
+     * Assigns the World to the character.
+     */
     setWorld() {
         this.character.gameWorld = this;            // = this -> ganze World Instanz, World wird in character gespeichert (in character.js this.world ausreichend)
     }
 
 
+    /**
+     * Draws the whole game world.
+     */
     draw() {
         if (isGamePaused || isGameOver) return;
         this.clearCanvas();
@@ -238,21 +301,34 @@ class World {
         this.animationFrameId = requestAnimationFrame(() => this.draw());
     }
 
+
+    /**
+     * Stops drawing the game.
+     */
     stopDrawing() {
         cancelAnimationFrame(this.animationFrameId);
     }
 
 
+    /**
+     * Clears everything from the canvas.
+     */
     clearCanvas() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     }
 
 
+    /**
+     * Draws the background objects.
+     */
     drawBackground() {
         this.addObjectsToMap(this.level.backgroundObjects);
     }
 
 
+    /**
+     * Draws all enemies, clouds, items, and projectiles.
+     */
     drawGameObjects() {
         this.addObjectsToMap(this.level.enemies);
         this.level.clouds.forEach(cloud => cloud.moveLeft());
@@ -263,6 +339,9 @@ class World {
     }
 
 
+    /**
+     * Draws all status bars.
+     */
     drawBars() {
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
@@ -271,11 +350,17 @@ class World {
     }
 
 
+    /**
+     * Draws multiple objects on the canvas.
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => this.addToMap(o))
     }
 
 
+    /**
+     * Draws one object on the canvas with direction check.
+     */
     addToMap(mo) {                                      //mo = MovableObject
         if (mo.otherDirection) this.flipImage(mo);
         mo.draw(this.ctx);
@@ -284,6 +369,9 @@ class World {
     }
 
 
+    /**
+     * Flips image to the left side.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);        //causes displacement
@@ -291,12 +379,14 @@ class World {
         mo.x = mo.x * -1;
     }
 
-
+    
+    /**
+     * Flips image back to original side.
+     */
     flipImageBack(mo) {
         this.ctx.restore();
         mo.x = mo.x * -1;
     }
-
 }
 
 
