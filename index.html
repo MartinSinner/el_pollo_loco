@@ -72,48 +72,52 @@
 
     <h1>El Pollo Loco</h1>
 
-    <div class="gameContainer">
-        <canvas id="canvas" width="720" height="480"></canvas>
 
-        <!-- game over menu-->
-        <div id="gameOver" class="gameOver dNone">
-            <button class="button" onclick="resetGame()">Try Again!</button>
-            <button class="button" onclick="mainMenu()">Give up</button>
-        </div>
+            <div id="fullscreen">
+                <div class="gameContainer">
+                    <canvas id="canvas" width="720" height="480"></canvas>
 
-        <!-- you win menu-->
-        <div id="youWin" class="youWin dNone">
-            <button class="button" onclick="resetGame()">Restart</button>
-            <button class="button" onclick="mainMenu()">Main Menu</button>
-        </div>
+                    <!-- game over menu-->
+                    <div id="gameOver" class="gameOver dNone">
+                        <button class="button" onclick="resetGame()">Try Again!</button>
+                        <button class="button" onclick="mainMenu()">Give up</button>
+                    </div>
 
-        <!-- pause menu-->
-        <div id="pauseOverlay" class="pauseOverlay">
-            <img src="img/background/pause.png" onclick="pauseGame()" alt="pause">
-            <img src="img/background/volume.png" onclick="toggleSound()" id="sound" alt="volume">
-        </div>
+                    <!-- you win menu-->
+                    <div id="youWin" class="youWin dNone">
+                        <button class="button" onclick="resetGame()">Restart</button>
+                        <button class="button" onclick="mainMenu()">Main Menu</button>
+                    </div>
 
-        <!-- resume menu-->
-        <div id="resumeOverlay" class="resumeOverlay dNone">
-            <p>Resume
-                <img src="img/background/play.png" onclick="resumeGame()" alt="play">
-            </p>
-        </div>
-    </div>
+                    <!-- pause menu-->
+                    <div id="pauseOverlay" class="pauseOverlay">
+                        <img src="img/background/pause.png" onclick="pauseGame()" alt="pause">
+                        <img src="img/background/volume.png" onclick="toggleSound()" id="sound" alt="volume">
+                        <img src="img/background/fullscreen.png" onclick="fullscreen()" id="fullscreenBtn" alt="fullscreen">
+                    </div>
 
-    <div id="mobileButtons" class="mobileButtonsContainer dNone">
-        <div class="navButtons">
-            <img id="buttonLeft" src="img/mobile/left.png" alt="left">
-            <img id="buttonRight" src="img/mobile/right.png" alt="right">
+                    <!-- resume menu-->
+                    <div id="resumeOverlay" class="resumeOverlay dNone">
+                        <p>Resume
+                            <img src="img/background/play.png" onclick="resumeGame()" alt="play">
+                        </p>
+                    </div>
+                </div>
+            </div>
 
-        </div>
+            <div id="mobileButtons" class="mobileButtonsContainer dNone">
+                <div class="navButtons">
+                    <img id="buttonLeft" src="img/mobile/left.png" alt="left">
+                    <img id="buttonRight" src="img/mobile/right.png" alt="right">
 
-        <div class="actionButtons">
-            <img id="buttonUp" class="upButton" src="img/mobile/up.png" alt="up">
-            <img id="buttonThrow" class="salsaBottle" src="img/mobile/salsa_bottle.png" alt="salsa">
-        </div>
+                </div>
 
-    </div>
+                <div class="actionButtons">
+                    <img id="buttonUp" class="upButton" src="img/mobile/up.png" alt="up">
+                    <img id="buttonThrow" class="salsaBottle" src="img/mobile/salsa_bottle.png" alt="salsa">
+                </div>
+
+            </div>
 
 </body>
 

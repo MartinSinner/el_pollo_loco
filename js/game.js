@@ -150,6 +150,13 @@ function mainMenu() {
     isGamePaused = false;
     isGameOver = false;
     showMainMenu();
+
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+
+        const btn = document.getElementById('fullscreenBtn');
+        if (btn) btn.src = "img/background/fullscreen.png";
+    }
 }
 
 
@@ -289,6 +296,29 @@ function soundOff() {
     gameover_sound.pause();
     win_sound.pause();
 }
+
+function fullscreen() {
+    const fullscreenElement = document.getElementById('fullscreen');
+    const btn = document.getElementById('fullscreenBtn');
+
+    if (!document.fullscreenElement) {
+        fullscreenElement.requestFullscreen();
+        btn.src = "img/background/exit.png";
+    } else {
+        document.exitFullscreen();
+        btn.src = "img/background/fullscreen.png";D
+    }
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
