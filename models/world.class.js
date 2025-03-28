@@ -47,7 +47,12 @@ class World {
         if (this.keyboard.D && this.salsabar.collectedSalsa > 0 && this.canThrow) {
             this.canThrow = false;
 
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y);
+            let bottle = new ThrowableObject(
+                this.character.x + (this.character.otherDirection ? -10 : 100), 
+                this.character.y,
+                this.character.otherDirection 
+            );
+            
             this.throwableObjects.push(bottle);
 
 
