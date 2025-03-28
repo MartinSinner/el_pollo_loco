@@ -429,6 +429,10 @@ canvas {
         height: 25px;
     }
 
+    #fullscreenBtn {
+        display: none;
+    }
+
     .volumeIcon {
         height: 30px !important;
     }
