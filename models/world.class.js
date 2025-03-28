@@ -69,27 +69,46 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) this.handleEnemyCollision(enemy, index);
             if (enemy instanceof Endboss) this.showBossbarIfNear(enemy);
-
         });
     }
 
 
     handleEnemyCollision(enemy, index) {
         if (this.character.isAboveGround() && this.character.speedY < 0) {
-            this.character.jump();
-            if (isMuted == false) {
-                if(enemy instanceof Chicken){
-                    chicken_sound.play();
-                } else if (enemy instanceof Chick) {
-                    chick_sound.play();
-                }
-            }
-            if (!(enemy instanceof Endboss)) this.removeEnemy(enemy, index);
-
+            this.handleStompEnemy(enemy, index);
         } else if (!this.character.isAboveGround()) {
             this.character.hit();
             this.healthbar.setPercentage(this.character.energy);
-            if (enemy instanceof Endboss) enemy.attack();
+            if (enemy instanceof Endboss) this.knockbackBoss(enemy);
+        }
+    }
+
+
+    handleStompEnemy(enemy, index) {
+        if (!(enemy instanceof Endboss)) {
+            this.character.jump();
+            if (isMuted == false) this.playEnemySound(enemy);
+            this.removeEnemy(enemy, index);
+        } else {
+            this.character.hit();
+            this.healthbar.setPercentage(this.character.energy);
+            this.knockbackBoss();
+            
+        }
+    }
+
+
+    knockbackBoss(enemy){
+        this.character.x -= 20; 
+        enemy.attack();
+    }
+
+
+    playEnemySound(enemy){
+        if (enemy instanceof Chicken) {
+            chicken_sound.play();
+        } else if (enemy instanceof Chick) {
+            chick_sound.play();
         }
     }
 
