@@ -212,6 +212,5 @@
 
     .upButton {
         width: clamp(60px, 7vw, 90px) !important;
-       
     }
 }

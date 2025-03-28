@@ -1,6 +1,25 @@
+/**
+ * The canvas where the game is drawn
+ * @type {HTMLCanvasElement}
+ */
 let canvas;
+
+
+/**
+ * Object to track pressed keys
+ * @type {Keyboard}
+ */
 let keyboard = new Keyboard();
+
+
+/**
+ * The main game world
+ * @type {World}
+ */
 let world;
+
+
+// --- Sounds & Music --- 
 let intro_music = new Audio('audio/audio_intro.mp3');
 intro_music.volume = 0.5;
 let background_music = new Audio('audio/audio_backgroundmusic.mp3');
@@ -31,55 +50,114 @@ collect_coin_sound.volume = 0.4;
 let gameover_sound = new Audio('audio/audio_gameover.mp3');
 let win_sound = new Audio('audio/audio_winning.mp3');
 
+
+/**
+ * Checks if the sound is muted
+ * @type {boolean}
+ */
 let isMuted = localStorage.getItem('isMuted') === "true";
 
+
+/**
+ * Game is paused
+ * @type {boolean}
+ */
 let isGamePaused = false;
+
+
+/**
+ * Game is over
+ * @type {boolean}
+ */
 let isGameOver = false;
 
 
+/**
+ * Triggers all event listeners for game
+ * 
+ * includes:
+ * - first screen click to show the main menu.
+ * - playing a sound when any menu button is clicked.
+ * - checking screen orientation on load, resize, or rotation.
+ */
 
 
-// Audio & Music
+function initEventListeners() {
+    handleFirstClick();
+    setUpButtonsClickSonds();
+    setUpOrientation();
+}
 
-document.addEventListener('DOMContentLoaded', () => {
+
+/**
+ * Sets up the first screen click to start the intro and show the main menu.
+ */
+function handleFirstClick() {
     const firstClickScreen = document.getElementById('firstClickScreen');
-
     firstClickScreen.addEventListener('click', () => {
         startIntroMusic();
         firstClickScreen.classList.add('dNone');
         document.getElementById('buttonsMainMenu').classList.remove('dNone');
         document.getElementById('intro').classList.remove('dNone');
     });
-});
+}
 
-document.querySelectorAll('.button').forEach(button => {
-    button.addEventListener('click', () => {
-        const sound = document.getElementById('buttonSound');
-        sound.currentTime = 0;
-        sound.play();
+
+/**
+ * Adds a sound effect when any menu button is clicked.
+ */
+function setUpButtonsClickSonds() {
+    document.querySelectorAll('.button').forEach(button => {
+        button.addEventListener('click', () => {
+            const sound = document.getElementById('buttonSound');
+            sound.currentTime = 0;
+            sound.play();
+        });
     });
+}
 
-});
+
+/**
+ * Adds listeners to check screen orientation on resize, load or rotation for mobile view.
+ */
+function setUpOrientation(){
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+    window.addEventListener('load', checkOrientation); 
+}
 
 
+//-- MUSIC CONTROLL ---
+
+/** Start intro music */
 function startIntroMusic() {
     if (!isMuted) {
         intro_music.play();
     }
 }
 
+
+/** Stop intro music */
 function stopIntroMusic() {
     intro_music.pause();
 }
 
+
+/** Start background game music */
 function startBackgroundMusic() {
     background_music.play();
 }
 
+
+/** Stop background game music */
 function stopBackgroundMusic() {
     background_music.pause();
 }
 
+// --- GAME ---
+
+
+/** Start the game */
 function init() {
     hideMainMenu();
     resetWorld();
@@ -91,6 +169,8 @@ function init() {
     world = new World(canvas, keyboard);
 }
 
+
+/** Hide the main menu */
 function hideMainMenu() {
     document.getElementById('intro').classList.add('dNone');
     document.getElementById('buttonsMainMenu').classList.add('dNone');
@@ -98,6 +178,7 @@ function hideMainMenu() {
 }
 
 
+/** Reset the game world */
 function resetWorld() {
     if (world) {
         world.stopDrawing();
@@ -107,6 +188,7 @@ function resetWorld() {
 }
 
 
+/** Create the level with all enemies, items and background */
 function createLevel() {
     level1 = new Level(
         [
@@ -145,6 +227,7 @@ function createLevel() {
 }
 
 
+/** Return to the main menu and stop fullscreen */
 function mainMenu() {
     resetWorld();
     isGamePaused = false;
@@ -153,13 +236,13 @@ function mainMenu() {
 
     if (document.fullscreenElement) {
         document.exitFullscreen();
-
         const btn = document.getElementById('fullscreenBtn');
         if (btn) btn.src = "img/background/fullscreen.png";
     }
 }
 
 
+/** Show the main menu */
 function showMainMenu() {
     document.getElementById('intro').classList.remove('dNone');
     document.getElementById('buttonsMainMenu').classList.remove('dNone');
@@ -168,6 +251,7 @@ function showMainMenu() {
 }
 
 
+/** Hide all overlays (win/game over/resume) */
 function hideGameOverOrWinScreen() {
     document.getElementById('gameOver').classList.add('dNone');
     document.getElementById('youWin').classList.add('dNone');
@@ -175,19 +259,19 @@ function hideGameOverOrWinScreen() {
 }
 
 
+/** Pause the game */
 function pauseGame() {
     document.getElementById('resumeOverlay').classList.remove('dNone');
     isGamePaused = true;
     if (isMuted == false) {
         stopBackgroundMusic();
-
         pepe_sleeping_sound.pause();
         pepe_sleeping_sound.currentTime = 0;
     }
-
 }
 
 
+/** Resume the game */
 function resumeGame() {
     document.getElementById('resumeOverlay').classList.add('dNone');
     isGamePaused = false;
@@ -195,10 +279,10 @@ function resumeGame() {
     if (isMuted == false) {
         startBackgroundMusic();
     }
-
 }
 
 
+/** Reset and restart the game */
 function resetGame() {
     isGamePaused = false;
     isGameOver = false;
@@ -212,32 +296,44 @@ function resetGame() {
 }
 
 
+/** Clear all active intervals (timers) */
 function clearAllIntervals() {
     gameIntervals.forEach(clearInterval);
     gameIntervals = [];
 }
 
+
+// --- INFO & OVERLAY ---
+
+
+/** Show the How to Play screen */
 function howToPlay() {
     document.getElementById('howToPlayOverlay').classList.remove('dNone');
 }
 
+
+/** Close the How to Play screen */
 function closeHowToPlay() {
     document.getElementById('howToPlayOverlay').classList.add('dNone');
 }
 
+
+/** Show the Impressum screen */
 function openImpressum() {
     document.getElementById('impressumOverlay').classList.remove('dNone');
 }
 
+
+/** Close the Impressum screen */
 function closeImpressum() {
     document.getElementById('impressumOverlay').classList.add('dNone');
 }
 
 
-window.addEventListener('resize', checkOrientation);
-window.addEventListener('orientationchange', checkOrientation);
-window.addEventListener('load', checkOrientation);
+// --- SCREEN ORIENTATION ---
 
+
+/** Check if device is in correct screen mode */
 function checkOrientation() {
     const isPortrait = window.innerHeight > window.innerWidth;
     const isMobile = window.innerWidth < 1400;
@@ -255,6 +351,11 @@ function checkOrientation() {
     updadteSound();
 }
 
+
+// --- SOUND TOGGLE ---
+
+
+/** Toggle mute/unmute */
 function toggleSound() {
     let sound = document.getElementById('sound');
     if (isMuted === true) {
@@ -266,17 +367,23 @@ function toggleSound() {
     }
 }
 
+
+/** Update the sound icon on screen */
 function updadteSound() {
     const soundIcon = document.getElementById('sound');
     soundIcon.src = isMuted ? "img/background/mute.png" : "img/background/volume.png";
 }
 
+
+/** Enable sound */
 function soundOn() {
     isMuted = false;
     localStorage.setItem('isMuted', isMuted);
     background_music.play();
 }
 
+
+/** Disable all sounds */
 function soundOff() {
     isMuted = true;
     localStorage.setItem('isMuted', isMuted.toString());
@@ -297,6 +404,11 @@ function soundOff() {
     win_sound.pause();
 }
 
+
+// --- FULLSCREEN ---
+
+
+/** Toggle fullscreen mode */
 function fullscreen() {
     const fullscreenElement = document.getElementById('fullscreen');
     const btn = document.getElementById('fullscreenBtn');
@@ -306,7 +418,7 @@ function fullscreen() {
         btn.src = "img/background/exit.png";
     } else {
         document.exitFullscreen();
-        btn.src = "img/background/fullscreen.png";D
+        btn.src = "img/background/fullscreen.png"; 
     }
 }
 
