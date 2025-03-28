@@ -1,0 +1,217 @@
+@media screen and (orientation: landscape) and (max-width: 1400px) {
+
+    html,
+    body {
+        width: 100vw;
+        height: 100dvh;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    @media screen and (orientation: landscape) {
+        .firstClick {
+            
+            width: 100%;
+            height: 100%;
+        }
+
+        .firstClickScreen p {
+            margin-top: 200px;
+
+        }
+    }
+
+    .intro {
+        width: 100%;
+        height: 100%;
+    }
+
+    .buttonsMainMenu button {
+        padding: 0 10px !important;
+    }
+
+    #howToPlayOverlay,
+    #impressumOverlay {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .infoContent {
+        width: 90%;
+        max-width: 600px;
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .infoContent h2 {
+        font-size: 28px;
+    }
+
+    .infoContent ul li {
+        font-size: 16px;
+    }
+
+    .infoContent button {
+        font-size: 20px;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .gameContainer {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    canvas,
+    .resumeOverlay,
+    .youWin,
+    .gameOver {
+        width: 100vw;
+        height: 100dvh;
+        position: absolute;
+        inset: 0;
+        border-radius: 0;
+    }
+
+    .pauseOverlay {
+        top: 10px;
+        right: 10px;
+        gap: 10px;
+    }
+
+    .pauseOverlay img {
+        height: 25px;
+    }
+
+    #fullscreenBtn {
+        display: none;
+    }
+
+    .volumeIcon {
+        height: 30px !important;
+    }
+
+    .resumeOverlay img {
+        height: 100px;
+        margin-top: -10px;
+    }
+
+    .resumeOverlay p {
+        font-size: 32px;
+        margin-bottom: 60px;
+    }
+
+    .button {
+        font-size: 20px;
+        padding: 16px 24px;
+    }
+
+    .mobileButtonsContainer {
+        position: absolute;
+        display: flex;
+        gap: 600px;
+        bottom: 1px;
+    }
+
+    .navButtons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .navButtons img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .actionButtons {
+        gap: 24px;
+    }
+
+    .salsaButton {
+        display: flex;
+    }
+
+    .upButton {
+        width: 40px !important;
+        margin-bottom: 8px;
+    }
+
+    .salsaBottle {
+        position: absolute;
+        width: 57px !important;
+        bottom: 6px;
+        z-index: 3;
+        right: 75px;
+    }
+
+    canvas {
+        z-index: 1;
+    }
+
+    .mobileButtonsContainer {
+        z-index: 2;
+    }
+
+    .pauseOverlay {
+        z-index: 3;
+    }
+
+    .resumeOverlay,
+    .youWin,
+    .gameOver {
+        z-index: 4;
+    }
+}
+
+
+@media screen and (orientation: landscape) and (max-width: 1400px) {
+    .mobileButtonsContainer {
+        gap: clamp(300px, 75vw, 650px);
+    }
+
+    .salsaBottle {
+        right: clamp(48px, 4vw, 72px);
+    }
+
+    .navButtons {
+        gap: clamp(8px, 3vw, 24px);
+    }
+
+    .buttonsMainMenu {
+        padding-top: clamp(10px, 4vh, 120px);
+    }
+
+    .buttonsMainMenu button p {
+        font-size: clamp(16px, 2.5vw, 28px);
+    }
+    
+}
+
+@media screen and (orientation: landscape) and (min-width: 1024px) {
+    .mobileButtonsContainer {
+        gap: clamp(300px, 80vw, 650px);
+    }
+
+    .navButtons img,
+    .actionButtons img {
+        width: clamp(70px, 8vw, 100px);
+        height: clamp(70px, 8vw, 100px);
+    }
+
+    .salsaBottle {
+        width: clamp(70px, 8vw, 100px) !important;
+        right: clamp(40px, 8vw, 80px);
+        bottom: clamp(4px, 2vh, 10px);
+    }
+
+    .upButton {
+        width: clamp(60px, 7vw, 90px) !important;
+       
+    }
+}

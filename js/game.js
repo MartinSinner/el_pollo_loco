@@ -240,7 +240,7 @@ window.addEventListener('load', checkOrientation);
 
 function checkOrientation() {
     const isPortrait = window.innerHeight > window.innerWidth;
-    const isMobile = window.innerWidth < 800;
+    const isMobile = window.innerWidth < 1400;
     const orientationMessage = document.getElementById('orientationMessage');
     const mobileButtons = document.getElementById('mobileButtons');
 
