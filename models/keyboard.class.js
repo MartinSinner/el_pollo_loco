@@ -18,7 +18,6 @@ class Keyboard {
     }
 
     keyDown(event) {
-        console.log('Key pressed:', event.keyCode);
 
         if (event.keyCode === 39) {
             this.RIGHT = true;

@@ -31,8 +31,8 @@ class DrawableObject {
         array.forEach((path) => {
 
             let img = new Image();
-            img.src = path;     //loading procces browser
-            this.imageCache[path] = img;        //saves all img 
+            img.src = path;    
+            this.imageCache[path] = img;       
         });
     }
 

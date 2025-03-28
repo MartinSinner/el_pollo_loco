@@ -23,22 +23,23 @@ class Healthbar extends MovableObject {
 
 
     setPercentage(percentage) {
-        this.percentage = percentage;
-        let path = this.IMAGES[this.resolveImage()]
+        this.percentage = Math.max(0, Math.min(100, Math.round(percentage)));
+        let path = this.IMAGES[this.resolveImage()];
         this.img = this.imageCache[path];
     }
+    
    
 
     resolveImage() {
-        if (this.percentage == 100) {
+        if (this.percentage >= 100) {
             return 5;
-        } else if (this.percentage > 80) {
+        } else if (this.percentage >= 80) {
             return 4;
-        } else if (this.percentage > 60) {
+        } else if (this.percentage >= 60) {
             return 3;
-        } else if (this.percentage > 40) {
+        } else if (this.percentage >= 40) {
             return 2;
-        } else if (this.percentage > 20) {
+        } else if (this.percentage >= 10) {
             return 1;
         } else {
             return 0;
