@@ -276,10 +276,10 @@ class World {
 
 
     /**
-     * Assigns the World to the character.
+     * Assigns the World to the character. Whole world instance is stored in character
      */
     setWorld() {
-        this.character.gameWorld = this;            // = this -> ganze World Instanz, World wird in character gespeichert (in character.js this.world ausreichend)
+        this.character.gameWorld = this;           
     }
 
 
@@ -360,8 +360,9 @@ class World {
 
     /**
      * Draws one object on the canvas with direction check.
+     * @param {MovableObject} mo
      */
-    addToMap(mo) {                                      //mo = MovableObject
+    addToMap(mo) {                                     
         if (mo.otherDirection) this.flipImage(mo);
         mo.draw(this.ctx);
         // mo.drawBorder(this.ctx);
@@ -370,12 +371,12 @@ class World {
 
 
     /**
-     * Flips image to the left side.
+     * Flips image to the left side. Causes reflection & displacement of the image
      */
     flipImage(mo) {
         this.ctx.save();
-        this.ctx.translate(mo.width, 0);        //causes displacement
-        this.ctx.scale(-1, 1);                  // causes reflection of the image
+        this.ctx.translate(mo.width, 0);        
+        this.ctx.scale(-1, 1);                  
         mo.x = mo.x * -1;
     }
 

@@ -172,7 +172,7 @@ class Endboss extends MovableObject {
         this.speed = 0;
         this.playAnimation(this.IMAGES_HURT);
         if (isMuted == false) {
-            endboss_hurt_sound.play();
+            endboss_hurt_sound.play().catch(error => {});
         }
 
         setTimeout(() => {
@@ -192,7 +192,7 @@ class Endboss extends MovableObject {
             this.isMoving = false;
             this.playAnimation(this.IMAGES_DEAD);
             if (isMuted == false) {
-                endboss_death_sound.play();
+                endboss_death_sound.play().catch(error=> {});
             }
 
             setTimeout(() => {
@@ -201,7 +201,7 @@ class Endboss extends MovableObject {
         }
     }
 
-    
+
     /**
      * Displays the 'You Win' screen and ends the game.
      */
@@ -211,7 +211,10 @@ class Endboss extends MovableObject {
 
         if (isMuted == false) {
             stopBackgroundMusic();
-            win_sound.play();
+            
+
+            endboss_death_sound.pause();
+            endboss_death_sound.currentTime = 0;
 
             pepe_sleeping_sound.pause();
             pepe_sleeping_sound.currentTime = 0;
@@ -221,6 +224,8 @@ class Endboss extends MovableObject {
 
             pepe_walking_sound.pause();
             pepe_walking_sound.currentTime = 0;
+
+            win_sound.play().catch(error => {});
         }
     }
 }
